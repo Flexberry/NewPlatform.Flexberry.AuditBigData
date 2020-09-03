@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData", "NewPlatform.Flexberry.AuditBigData\NewPlatform.Flexberry.AuditBigData.csproj", "{64F896B4-C88D-4F20-BFD1-9511A744685B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Objects", "Objects\NewPlatform.Flexberry.AuditBigData.Objects.csproj", "{AD2B7C5D-C87E-4EB7-919C-B536EF226A7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3D619267-3BE8-42D5-8593-224430B9F2EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Tests", "Tests\NewPlatform.Flexberry.AuditBigData.Tests\NewPlatform.Flexberry.AuditBigData.Tests.csproj", "{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Tests.Objects", "Tests\Objects\NewPlatform.Flexberry.AuditBigData.Tests.Objects.csproj", "{68AA3C8A-25F3-47A7-B732-3649105F0093}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Open Source", "Open Source", "{BC7AFDF2-8C94-4AC5-A551-B353B0594AA5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		CHANGELOG.md = CHANGELOG.md
+		LICENSE = LICENSE
+		NewPlatform.Flexberry.AuditBigData.nuspec = NewPlatform.Flexberry.AuditBigData.nuspec
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UML", "UML", "{975F1914-92BE-4D7A-98F4-F3198571BF5D}"
+	ProjectSection(SolutionItems) = preProject
+		UML\NewPlatform.Flexberry.AuditBigData.crp = UML\NewPlatform.Flexberry.AuditBigData.crp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{0D3463A6-0EB9-4B3A-BC10-B448FE864375}"
+	ProjectSection(SolutionItems) = preProject
+		SQL\ClickHouseDirectGenerator.create.sql = SQL\ClickHouseDirectGenerator.create.sql
+		SQL\MSSql.create.sql = SQL\MSSql.create.sql
+		SQL\Oracle.create.sql = SQL\Oracle.create.sql
+		SQL\PostgreSql.create.sql = SQL\PostgreSql.create.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64F896B4-C88D-4F20-BFD1-9511A744685B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F896B4-C88D-4F20-BFD1-9511A744685B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F896B4-C88D-4F20-BFD1-9511A744685B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F896B4-C88D-4F20-BFD1-9511A744685B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD2B7C5D-C87E-4EB7-919C-B536EF226A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD2B7C5D-C87E-4EB7-919C-B536EF226A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD2B7C5D-C87E-4EB7-919C-B536EF226A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD2B7C5D-C87E-4EB7-919C-B536EF226A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA} = {3D619267-3BE8-42D5-8593-224430B9F2EA}
+		{68AA3C8A-25F3-47A7-B732-3649105F0093} = {3D619267-3BE8-42D5-8593-224430B9F2EA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {019E4A2E-E281-46DD-B2AD-95443DF23A35}
+	EndGlobalSection
+EndGlobal
