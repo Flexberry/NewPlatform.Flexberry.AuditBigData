@@ -16,11 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0-beta08" />
-    <PackageReference Include="NewPlatform.Flexberry.ORM.MSSQLDataService" Version="6.0.0-beta07" />
-    <PackageReference Include="NewPlatform.Flexberry.ORM.OracleDataService" Version="6.0.0-beta07" />
-    <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0-beta07" />
-    <PackageReference Include="Moq" Version="4.14.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0-beta13" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.MSSQLDataService" Version="6.0.0-beta11" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.OracleDataService" Version="6.0.0-beta12" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0-beta12" />
+    <PackageReference Include="Moq" Version="4.15.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
