@@ -63,4 +63,12 @@
     <ProjectReference Include="..\Objects\NewPlatform.Flexberry.AuditBigData.Tests.Objects.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
