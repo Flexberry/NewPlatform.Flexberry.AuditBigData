@@ -54,9 +54,10 @@ jobs:
       - name: Compile code
         run:  msbuild /verbosity:quiet /p:WarningLevel=0 /p:Configuration=Debug "NewPlatform.Flexberry.AuditBigData.sln" 
 
+      - name: Integration test under mono
+        run: mono ./testrunner/xunit.runner.console.2.4.1/tools/net461/xunit.console.exe ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/net461/NewPlatform.Flexberry.AuditBigData.Tests.dll
+
       - name: Integration test under dotnet
         run: dotnet test ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/netcoreapp3.1/NewPlatform.Flexberry.AuditBigData.Tests.dll
 
-      - name: Integration test under mono
-        run: mono ./testrunner/xunit.runner.console.2.4.1/tools/net461/xunit.console.exe ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/net461/NewPlatform.Flexberry.AuditBigData.Tests.dll
         
