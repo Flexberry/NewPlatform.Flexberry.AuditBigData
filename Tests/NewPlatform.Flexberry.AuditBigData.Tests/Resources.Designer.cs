@@ -8,8 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ICSSoft.STORMNET.Business.Audit.Tests{
-
+namespace NewPlatform.Flexberry.AuditBigData.Tests {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -17,8 +19,8 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests{
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
-    //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
         
@@ -37,7 +39,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests{
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ICSSoft.STORMNET.Business.Audit.Tests.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NewPlatform.Flexberry.AuditBigData.Tests.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,33 +65,36 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests{
         ///
         ///
         ///
-        ///CREATE TABLE [InformationTestClass] (
+        ///CREATE TABLE [Class2] (
         ///
         ///	 [primaryKey] UNIQUEIDENTIFIER  NOT NULL,
         ///
-        ///	 [PublicStringProperty] VARCHAR(255)  NULL,
+        ///	 [Field21] VARCHAR(255)  NULL,
         ///
-        ///	 [StringPropertyForInfTestClass] VARCHAR(255)  NULL,
+        ///	 [Field22] VARCHAR(255)  NULL,
         ///
-        ///	 [IntPropertyForInfTestClass] INT  NULL,
+        ///	 [CreateTime] DATETIME  NULL,
         ///
-        ///	 [BoolPropertyForInfTestClass] BIT  NULL,
+        ///	 [Creator] VARCHAR(255)  NULL,
+        ///
+        ///	 [EditTime] DATETIME  NULL,
+        ///
+        ///	 [Editor] VARCHAR(255)  NULL,
+        ///
+        ///	 [Class1] UNIQUEIDENTIFIER  NULL,
+        ///
+        ///	 [Class4] UNIQUEIDENTIFIER  NULL,
         ///
         ///	 PRIMARY KEY ([primaryKey]))
         ///
         ///
-        ///CREATE TABLE [ТипЛапы] (
+        ///CREATE TABLE [Class1] (
         ///
         ///	 [primaryKey] UNIQUEIDENTIFIER  NOT NULL,
         ///
-        ///	 [Название] VARCHAR(255)  NULL,
+        ///	 [Field11] VARCHAR(255)  NULL,
         ///
-        ///	 [Актуально] BIT  NULL,
-        ///
-        ///	 PRIMARY KEY ([primaryKey]))
-        ///
-        ///
-        ///CREATE TABLE  [rest of string was truncated]&quot;;.
+        ///	 [Fiel [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MssqlScript {
             get {
@@ -102,37 +107,41 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests{
         ///
         ///
         ///
-        ///CREATE TABLE &quot;InformationTestClass&quot;
+        ///CREATE TABLE &quot;Class2&quot;
         ///(
         ///
         ///	&quot;primaryKey&quot; RAW(16) NOT NULL,
         ///
-        ///	&quot;PublicStringProperty&quot; NVARCHAR2(255) NULL,
+        ///	&quot;Field21&quot; NVARCHAR2(255) NULL,
         ///
-        ///	&quot;StringPropertyForInfTestClass&quot; NVARCHAR2(255) NULL,
+        ///	&quot;Field22&quot; NVARCHAR2(255) NULL,
         ///
-        ///	&quot;IntPropertyForInfTestClass&quot; NUMBER(10) NULL,
+        ///	&quot;CreateTime&quot; DATE NULL,
         ///
-        ///	&quot;BoolPropertyForInfTestClass&quot; NUMBER(1) NULL,
+        ///	&quot;Creator&quot; NVARCHAR2(255) NULL,
+        ///
+        ///	&quot;EditTime&quot; DATE NULL,
+        ///
+        ///	&quot;Editor&quot; NVARCHAR2(255) NULL,
+        ///
+        ///	&quot;Class1&quot; RAW(16) NULL,
+        ///
+        ///	&quot;Class4&quot; RAW(16) NULL,
         ///
         ///	 PRIMARY KEY (&quot;primaryKey&quot;)
         ///) ;
         ///
         ///
-        ///CREATE TABLE &quot;ТипЛапы&quot;
+        ///CREATE TABLE &quot;Class1&quot;
         ///(
         ///
         ///	&quot;primaryKey&quot; RAW(16) NOT NULL,
         ///
-        ///	&quot;Название&quot; NVARCHAR2(255) NULL,
+        ///	&quot;Field11&quot; NVARCHAR2(255) NULL,
         ///
-        ///	&quot;Актуально&quot; NUMBER(1) NULL,
+        ///	&quot;Field12&quot; NVARCHAR2(255) NULL,
         ///
-        ///	 PRIMARY KEY (&quot;primaryKey&quot;)
-        ///) ;
-        ///
-        ///
-        ///CREATE TABLE [rest of string was truncated]&quot;;.
+        ///	&quot;CreateTime&quot; DATE NUL [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string OracleScript {
             get {
@@ -145,82 +154,42 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests{
         ///
         ///
         ///
-        ///CREATE TABLE МастерКлассДлинноеИмя (
+        ///CREATE TABLE Class2 (
         ///
         /// primaryKey UUID NOT NULL,
         ///
-        /// АтрибутМастерКласса01 VARCHAR(255) NULL,
+        /// Field21 VARCHAR(255) NULL,
         ///
-        /// АтрибутМастерКласса02 VARCHAR(255) NULL,
+        /// Field22 VARCHAR(255) NULL,
         ///
-        /// MasterAttr1 TIMESTAMP(3) NULL,
+        /// CreateTime TIMESTAMP(3) NULL,
         ///
-        /// MasterAttr2 BOOLEAN NULL,
+        /// Creator VARCHAR(255) NULL,
         ///
-        /// MasterRoot UUID NOT NULL,
+        /// EditTime TIMESTAMP(3) NULL,
+        ///
+        /// Editor VARCHAR(255) NULL,
+        ///
+        /// Class1 UUID NULL,
+        ///
+        /// Class4 UUID NULL,
         ///
         /// PRIMARY KEY (primaryKey));
         ///
         ///
-        ///CREATE TABLE Class_ulong (
+        ///CREATE TABLE Class1 (
         ///
         /// primaryKey UUID NOT NULL,
         ///
-        /// Attr BIGINT NULL,
+        /// Field11 VARCHAR(255) NULL,
         ///
-        /// PRIMARY KEY (primaryKey));
+        /// Field12 VARCHAR(255) NULL,
         ///
+        /// CreateTime TIMESTAMP(3) NULL,
         ///
-        ///CREATE TABLE ДочернийКлассДлинноеИмя (
+        /// Creator VARCHAR(255) NULL,
         ///
-        /// primaryKey UUID NOT NULL,
-        ///
-        /// Attr21 TEXT NULL,
-        ///
-        /// Attr20 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string PostgresDataServiceTestScript {
-            get {
-                return ResourceManager.GetString("PostgresDataServiceTestScript", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 
-        ///
-        ///
-        ///
-        ///CREATE TABLE InformationTestClass (
-        ///
-        /// primaryKey UUID NOT NULL,
-        ///
-        /// PublicStringProperty VARCHAR(255) NULL,
-        ///
-        /// StringPropertyForInfTestClass VARCHAR(255) NULL,
-        ///
-        /// IntPropertyForInfTestClass INT NULL,
-        ///
-        /// BoolPropertyForInfTestClass BOOLEAN NULL,
-        ///
-        /// PRIMARY KEY (primaryKey));
-        ///
-        ///
-        ///CREATE TABLE ТипЛапы (
-        ///
-        /// primaryKey UUID NOT NULL,
-        ///
-        /// Название VARCHAR(255) NULL,
-        ///
-        /// Актуально BOOLEAN NULL,
-        ///
-        /// PRIMARY KEY (primaryKey));
-        ///
-        ///
-        ///CREATE TABLE Идея (
-        ///
-        /// primaryKey UUID NOT NULL,
-        ///
-        /// Заголовок VARCH [rest of string was truncated]&quot;;.
+        ///  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PostgresScript {
             get {

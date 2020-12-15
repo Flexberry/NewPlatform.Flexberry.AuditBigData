@@ -11,6 +11,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using NewPlatform.Flexberry.AuditBigData;
+    using NewPlatform.Flexberry.AuditBigData.Tests;
     using Npgsql;
     using Oracle.ManagedDataAccess.Client;
 
@@ -369,7 +370,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 AppName = "Tests",
                 AuditEnabled = true,
                 IsDatabaseLocal = true,
-                AuditConnectionStringName = null,
+                AuditConnectionStringName = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}",
                 AuditWinServiceUrl = null,
                 WriteSessions = false,
                 DefaultWriteMode = tWriteMode.Synchronous,

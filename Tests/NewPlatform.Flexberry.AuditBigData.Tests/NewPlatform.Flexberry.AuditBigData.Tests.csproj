@@ -16,11 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0-beta08" />
-    <PackageReference Include="NewPlatform.Flexberry.ORM.MSSQLDataService" Version="6.0.0-beta07" />
-    <PackageReference Include="NewPlatform.Flexberry.ORM.OracleDataService" Version="6.0.0-beta07" />
-    <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0-beta07" />
-    <PackageReference Include="Moq" Version="4.14.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0-beta13" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.MSSQLDataService" Version="6.0.0-beta11" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.OracleDataService" Version="6.0.0-beta12" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0-beta12" />
+    <PackageReference Include="Moq" Version="4.15.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -61,6 +62,14 @@
     <ProjectReference Include="..\..\NewPlatform.Flexberry.AuditBigData\NewPlatform.Flexberry.AuditBigData.csproj" />
     <ProjectReference Include="..\..\Objects\NewPlatform.Flexberry.AuditBigData.Objects.csproj" />
     <ProjectReference Include="..\Objects\NewPlatform.Flexberry.AuditBigData.Tests.Objects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
