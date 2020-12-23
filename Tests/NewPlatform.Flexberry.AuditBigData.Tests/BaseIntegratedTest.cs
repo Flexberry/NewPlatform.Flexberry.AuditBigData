@@ -370,7 +370,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 AppName = "Tests",
                 AuditEnabled = true,
                 IsDatabaseLocal = true,
-                AuditConnectionStringName = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}",
+                AuditConnectionStringName = dataService.AuditService.AppSetting.AuditConnectionStringName,
                 AuditWinServiceUrl = null,
                 WriteSessions = false,
                 DefaultWriteMode = tWriteMode.Synchronous,
@@ -378,7 +378,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
             if (dataService != null)
             {
-                var auditDsSetting = new AuditDSSetting(dataService, null);
+                var auditDsSetting = new AuditDSSetting(dataService, $"{auditAppSetting.AppName}_{auditAppSetting.AuditConnectionStringName}");
                 auditAppSetting.AuditDSSettings.Add(auditDsSetting);
             }
 
