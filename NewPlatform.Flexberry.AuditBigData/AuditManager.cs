@@ -10,14 +10,19 @@
     /// </summary>
     public class AuditManager : IAudit
     {
-        private IDataService dataService;
+        private readonly IDataService dataService;
 
         /// <summary>
         /// Initialize new instance <see cref="AuditManager"/>.
         /// </summary>
-        /// <param name="dataService">DataSerice for write <see cref="AuditRecord"/>.</param>
+        /// <param name="dataService">IDataSerice instance to write <see cref="AuditRecord"/>.</param>
         public AuditManager(IDataService dataService)
         {
+            if (dataService == null)
+            {
+                throw new ArgumentNullException(nameof(dataService));
+            }
+
             this.dataService = dataService;
         }
 

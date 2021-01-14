@@ -362,7 +362,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <summary>
         /// Провести инициализацию сервиса аудита.
         /// </summary>
-        /// <param name="dataService">Основной сервис данных приложения (может быть <c>null</c>).</param>
+        /// <param name="dataService">Сервис данных аудита.</param>
         private void InitAuditService(IDataService dataService)
         {
             var auditAppSetting = new AuditAppSetting
@@ -376,11 +376,8 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 DefaultWriteMode = tWriteMode.Synchronous,
             };
 
-            if (dataService != null)
-            {
-                var auditDsSetting = new AuditDSSetting(dataService, $"{auditAppSetting.AppName}_{auditAppSetting.AuditConnectionStringName}");
-                auditAppSetting.AuditDSSettings.Add(auditDsSetting);
-            }
+            var auditDsSetting = new AuditDSSetting(dataService, $"{auditAppSetting.AppName}_{auditAppSetting.AuditConnectionStringName}");
+            auditAppSetting.AuditDSSettings.Add(auditDsSetting);
 
             AuditService.InitAuditService(auditAppSetting, new AuditManager(dataService), dataService?.AuditService);
         }
