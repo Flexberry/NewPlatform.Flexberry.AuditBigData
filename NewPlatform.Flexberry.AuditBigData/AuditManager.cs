@@ -1,8 +1,10 @@
 ﻿namespace NewPlatform.Flexberry.AuditBigData
 {
     using System;
+    using ICSSoft.STORMNET;
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit;
+    using ICSSoft.STORMNET.Business.Audit.Exceptions;
     using ICSSoft.STORMNET.KeyGen;
 
     /// <summary>
@@ -45,22 +47,36 @@
                 throw new Exception("Invalid audit parameters: null operated object.");
             }
 
-            AuditRecord auditRecord = new AuditRecord()
+            try
             {
-                UserName = commonAuditParameters.UserName,
-                UserLogin = commonAuditParameters.FullUserLogin,
-                ObjectType = commonAuditParameters.OperatedObject.GetType().FullName,
-                ObjectPrimaryKey = commonAuditParameters.OperatedObject.__PrimaryKey,
-                OperationTime = commonAuditParameters.CurrentTime,
-                OperationType = commonAuditParameters.TypeOfAuditOperation.ToString(),
-                ExecutionStatus = ExecutionStatus.Unexecuted,
-                Source = commonAuditParameters.OperationSource,
-                SerializedFields = string.Empty,
-            };
+                AuditRecord auditRecord = new AuditRecord()
+                {
+                    UserName = commonAuditParameters.UserName,
+                    UserLogin = commonAuditParameters.FullUserLogin,
+                    ObjectType = commonAuditParameters.OperatedObject.GetType().FullName,
+                    ObjectPrimaryKey = commonAuditParameters.OperatedObject.__PrimaryKey,
+                    OperationTime = commonAuditParameters.CurrentTime,
+                    OperationType = commonAuditParameters.TypeOfAuditOperation.ToString(),
+                    ExecutionStatus = ExecutionStatus.Unexecuted,
+                    Source = commonAuditParameters.OperationSource,
+                    SerializedFields = string.Empty,
+                };
 
-            dataService.UpdateObject(auditRecord);
+                dataService.UpdateObject(auditRecord);
 
-            return ((KeyGuid)auditRecord.__PrimaryKey).Guid;
+                LogService.LogInfoFormat(
+                    "Audit, WriteCommonAuditOperation: объект {0}:{1} записан в аудит с ключом {2}",
+                    auditRecord.ObjectPrimaryKey,
+                    commonAuditParameters.OperatedObject,
+                    auditRecord.__PrimaryKey);
+
+                return ((KeyGuid)auditRecord.__PrimaryKey).Guid;
+            }
+            catch (Exception ex)
+            {
+                LogService.LogError("Audit, WriteCommonAuditOperation: " + ex.Message, ex);
+                throw new ExecutionFailedAuditException(ex);
+            }
         }
 
         /// <inheritdoc/>
