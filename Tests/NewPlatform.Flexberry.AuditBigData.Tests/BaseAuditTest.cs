@@ -62,7 +62,6 @@
                 string firstFild1 = "Field11";
                 string secondFild1 = "Field12";
 
-
                 string firstFild2 = "Field11AfterChange";
                 string secondFild2 = "Field12fterChange";
 

@@ -379,7 +379,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             var auditDsSetting = new AuditDSSetting(dataService, $"{auditAppSetting.AppName}_{auditAppSetting.AuditConnectionStringName}");
             auditAppSetting.AuditDSSettings.Add(auditDsSetting);
 
-            AuditService.InitAuditService(auditAppSetting, new AuditManager(dataService), dataService?.AuditService);
+            AuditService.InitAuditService(auditAppSetting, new AuditManager(dataService, new DefaultAuditSerializer()), dataService.AuditService);
         }
     }
 }

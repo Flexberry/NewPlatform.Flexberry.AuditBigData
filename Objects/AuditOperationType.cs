@@ -62,7 +62,12 @@ namespace NewPlatform.Flexberry.AuditBigData
 
         // *** End programmer edit section *** (AuditOperationType.SessionEnd CustomAttributes)
         SessionEnd,
-        
+
+        // *** Start programmer edit section *** (AuditOperationType.Ratify CustomAttributes)
+
+        // *** End programmer edit section *** (AuditOperationType.Ratify CustomAttributes)
+        Ratify,
+
         // *** Start programmer edit section *** (AuditOperationType.Custom CustomAttributes)
 
         // *** End programmer edit section *** (AuditOperationType.Custom CustomAttributes)
