@@ -2,22 +2,66 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Text;
     using ICSSoft.STORMNET.Business.Audit;
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using NewPlatform.Flexberry.Audit.Tests;
     using Xunit;
+    using Xunit.Abstractions;
 
     /// <summary>
     /// Проверка быстродействия операций с данными. С использование аудита и без.
     /// </summary>
     public class AuditOperationsPerformanceTest : BaseAuditServiceTest
     {
+        // Количество создаваемых записей для теста.
+        private const int RECORDS_COUNT = 10000;
+
+        private readonly ITestOutputHelper output;
+
+        public AuditOperationsPerformanceTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         /// <summary>
         /// Вставка записей без использования аудита.
         /// </summary>
         [Fact]
-        public void InsertPerformaceTestWithoutAudit()
+        public void PerformaceTestWithoutAudit()
+        {
+            ExecuteOperations(true);
+        }
+
+        /// <summary>
+        /// Вставка записей с использованием аудита.
+        /// </summary>
+        [Fact]
+        public void PerformaceTestWithAudit()
+        {
+            ExecuteOperations();
+        }
+
+        /// <summary>
+        /// Gets the enabled audit service for the test.
+        /// </summary>
+        /// <returns>Returns instance of the <see cref="AuditService" /> class that will be used for the test.</returns>
+        protected override AuditService GetAuditServiceForTest()
+        {
+            return new AuditService
+            {
+                AppSetting = new AuditAppSetting { AuditEnabled = true },
+                ApplicationMode = AppMode.Win,
+                Audit = new EmptyAudit(),
+            };
+        }
+
+        /// <summary>
+        /// Выполнить операции создания, изменения и удаления записей.
+        /// </summary>
+        /// <param name="disableAudit)">Флаг отключения.</param>
+        private void ExecuteOperations(bool disableAudit = false)
         {
             // Два класса мастеров. Будут назначаться рандомно.
             Class1 masterClass1 = new Class1
@@ -36,11 +80,21 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
             foreach (IDataService dataService in DataServices)
             {
-                List<DataObject> dataObjects = new List<DataObject>();
-
-                for (int i = 0; i < 1000; i++)
+                if (disableAudit)
                 {
-                    // Два класса детейлов. будут назначаться рандомно.
+                    // Отключаем аудит.
+                    dataService.AuditService.AppSetting.AuditConnectionStringName = string.Empty;
+                }
+
+                List<DataObject> createdDataObjects = new List<DataObject>();
+
+                Stopwatch timerForInsertData = new Stopwatch();
+                timerForInsertData.Start();
+
+                // Создаем записи.
+                for (int i = 1; i <= RECORDS_COUNT; i++)
+                {
+                    // Два класса детейлов. Будут назначаться рандомно.
                     Class3 detailClass1 = new Class3
                     {
                         Field31 = string.Concat("detail_1_", RandomStringGenerator(randomizer)),
@@ -63,31 +117,57 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     Class3 detail = randomizer.Next(0, 2) != 0 ? detailClass1 : detailClass2;
                     class2.Class3.Add(detail);
 
-                    dataObjects.Add(class2);
-
-                    if (i % 100 == 0)
-                    {
-                        DataObject[] dataObjectsArray = dataObjects.ToArray();
-                        dataService.UpdateObjects(ref dataObjectsArray);
-
-                        dataObjects.Clear();
-                    }
+                    createdDataObjects.Add(class2);
+                    DataObject[] dataObjects = new DataObject[] { class2 };
+                    dataService.UpdateObjects(ref dataObjects);
                 }
-            }
-        }
 
-        /// <summary>
-        /// Gets the enabled audit service for the test.
-        /// </summary>
-        /// <returns>Returns instance of the <see cref="AuditService" /> class that will be used for the test.</returns>
-        protected override AuditService GetAuditServiceForTest()
-        {
-            return new AuditService
-            {
-                AppSetting = new AuditAppSetting { AuditEnabled = true },
-                ApplicationMode = AppMode.Win,
-                Audit = new EmptyAudit(),
-            };
+                timerForInsertData.Stop();
+                float insertTime = timerForInsertData.ElapsedMilliseconds;
+
+                string auditCaption = disableAudit ? " without audit" : "with audit";
+                string messageForInsert = $"{dataService.GetType()} Insert {RECORDS_COUNT} records {auditCaption} takes milliseconds - {insertTime}";
+                output.WriteLine(messageForInsert);
+
+                // Операция изменения данных
+                Stopwatch timerForUpdateData = new Stopwatch();
+                timerForUpdateData.Start();
+
+                foreach (Class2 createdClass in createdDataObjects)
+                {
+                    Class2 updatedClass = createdClass;
+
+                    updatedClass.Field21 = RandomStringGenerator(randomizer);
+                    DataObject[] dataObjects = new DataObject[] { updatedClass };
+                    dataService.UpdateObjects(ref dataObjects);
+                }
+
+                timerForUpdateData.Stop();
+                float updateTime = timerForUpdateData.ElapsedMilliseconds;
+
+                string messageForUpdate = $"{dataService.GetType()} Update {RECORDS_COUNT} records {auditCaption} takes milliseconds - {updateTime}";
+                output.WriteLine(messageForUpdate);
+
+                // Операция удаления данных
+                Stopwatch timerForDeleteData = new Stopwatch();
+                timerForDeleteData.Start();
+
+                foreach (Class2 createdClass in createdDataObjects)
+                {
+                    Class2 updatedClass = createdClass;
+
+                    updatedClass.Field21 = RandomStringGenerator(randomizer);
+                    DataObject[] dataObjects = new DataObject[] { updatedClass };
+                    dataObjects[0].SetStatus(ObjectStatus.Deleted);
+                    dataService.UpdateObjects(ref dataObjects);
+                }
+
+                timerForDeleteData.Stop();
+                float deleteTime = timerForDeleteData.ElapsedMilliseconds;
+
+                string messageForDelete = $"{dataService.GetType()} Delete {RECORDS_COUNT} records {auditCaption} takes milliseconds - {deleteTime}";
+                output.WriteLine(messageForDelete);
+            }
         }
 
         /// <summary>
