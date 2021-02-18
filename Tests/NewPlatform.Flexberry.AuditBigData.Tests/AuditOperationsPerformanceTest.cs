@@ -60,7 +60,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <summary>
         /// Выполнить операции создания, изменения и удаления записей.
         /// </summary>
-        /// <param name="disableAudit)">Флаг отключения.</param>
+        /// <param name="disableAudit)">Флаг отключения аудита.</param>
         private void ExecuteOperations(bool disableAudit = false)
         {
             // Два класса мастеров. Будут назначаться рандомно.
@@ -83,6 +83,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 if (disableAudit)
                 {
                     // Отключаем аудит.
+                    dataService.AuditService.DisableAudit();
                     dataService.AuditService.AppSetting.AuditConnectionStringName = string.Empty;
                 }
 
