@@ -12,7 +12,7 @@ CREATE TABLE [Audit] (
 
 	 [ObjectType] VARCHAR(255)  NULL,
 
-	 [ObjectPrimaryKey] LONGVARBINARY  NULL,
+	 [ObjectPrimaryKey] NVARCHAR(38)  NULL,
 
 	 [OperationTime] DATETIME  NOT NULL,
 

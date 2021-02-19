@@ -15,11 +15,20 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
     /// </summary>
     public class AuditOperationsPerformanceTest : BaseAuditServiceTest
     {
-        //  оличество создаваемых записей дл€ теста.
-        private const int RECORDS_COUNT = 10000;
+        /// <summary>
+        ///  оличество создаваемых записей дл€ теста.
+        /// </summary>
+        private const int RECORDS_COUNT = 1000;
 
+        /// <summary>
+        /// Ёкземпл€р класса дл€ вывода сообщений.
+        /// </summary>
         private readonly ITestOutputHelper output;
 
+        /// <summary>
+        ///  онструктор.
+        /// </summary>
+        /// <param name="output"> Ёкземпл€р класса дл€ вывода сообщений.</param>
         public AuditOperationsPerformanceTest(ITestOutputHelper output)
         {
             this.output = output;
@@ -125,9 +134,10 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                 timerForInsertData.Stop();
                 float insertTime = timerForInsertData.ElapsedMilliseconds;
+                int averageInsertTime = (int)insertTime / RECORDS_COUNT;
 
                 string auditCaption = disableAudit ? " without audit" : "with audit";
-                string messageForInsert = $"{dataService.GetType()} Insert {RECORDS_COUNT} records {auditCaption} takes milliseconds - {insertTime}";
+                string messageForInsert = $"{dataService.GetType()} Insert {RECORDS_COUNT} records {auditCaption} takes milliseconds - {insertTime}. Average Insert Time - {averageInsertTime}";
                 output.WriteLine(messageForInsert);
 
                 // ќпераци€ изменени€ данных
@@ -145,8 +155,9 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                 timerForUpdateData.Stop();
                 float updateTime = timerForUpdateData.ElapsedMilliseconds;
+                int averageUpdateTime = (int)updateTime / RECORDS_COUNT;
 
-                string messageForUpdate = $"{dataService.GetType()} Update {RECORDS_COUNT} records {auditCaption} takes milliseconds - {updateTime}";
+                string messageForUpdate = $"{dataService.GetType()} Update {RECORDS_COUNT} records {auditCaption} takes milliseconds - {updateTime}. Average Update Time - {averageUpdateTime}";
                 output.WriteLine(messageForUpdate);
 
                 // ќпераци€ удалени€ данных
@@ -165,8 +176,9 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                 timerForDeleteData.Stop();
                 float deleteTime = timerForDeleteData.ElapsedMilliseconds;
+                int averageDeleteTime = (int)deleteTime / RECORDS_COUNT;
 
-                string messageForDelete = $"{dataService.GetType()} Delete {RECORDS_COUNT} records {auditCaption} takes milliseconds - {deleteTime}";
+                string messageForDelete = $"{dataService.GetType()} Delete {RECORDS_COUNT} records {auditCaption} takes milliseconds - {deleteTime}. Average Delete Time - {averageDeleteTime}";
                 output.WriteLine(messageForDelete);
             }
         }
@@ -174,6 +186,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <summary>
         /// ‘ормирует случайную строку дл€ значений полей.
         /// </summary>
+        /// <param name="random"> Ёкземпл€р генератора, созданного заранее.</param>
         private string RandomStringGenerator(Random random)
         {
             int length = 7;
