@@ -18,7 +18,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <summary>
         /// Количество создаваемых записей для теста.
         /// </summary>
-        private const int RECORDS_COUNT = 1000;
+        private const int _recordsCount = 1000;
 
         /// <summary>
         /// Экземпляр класса для вывода сообщений.
@@ -102,9 +102,9 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 timerForInsertData.Start();
 
                 // Создаем записи.
-                for (int i = 1; i <= RECORDS_COUNT; i++)
+                for (int i = 1; i <= _recordsCount; i++)
                 {
-                    // Два класса детейлов. Будут назначаться рандомно.
+                    // Два класса детейлов.
                     Class3 detailClass1 = new Class3
                     {
                         Field31 = string.Concat("detail_1_", RandomStringGenerator(randomizer)),
@@ -124,8 +124,8 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                         Class1 = randomizer.Next(0, 2) != 0 ? masterClass1 : masterClass2,
                     };
 
-                    Class3 detail = randomizer.Next(0, 2) != 0 ? detailClass1 : detailClass2;
-                    class2.Class3.Add(detail);
+                    class2.Class3.Add(detailClass1);
+                    class2.Class3.Add(detailClass2);
 
                     createdDataObjects.Add(class2);
                     DataObject[] dataObjects = new DataObject[] { class2 };
@@ -134,10 +134,10 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                 timerForInsertData.Stop();
                 float insertTime = timerForInsertData.ElapsedMilliseconds;
-                int averageInsertTime = (int)insertTime / RECORDS_COUNT;
+                int averageInsertTime = (int)insertTime / _recordsCount;
 
                 string auditCaption = disableAudit ? " without audit" : "with audit";
-                string messageForInsert = $"{dataService.GetType()} Insert {RECORDS_COUNT} records {auditCaption} takes milliseconds - {insertTime}. Average Insert Time - {averageInsertTime}";
+                string messageForInsert = $"{dataService.GetType()} Insert {_recordsCount} records {auditCaption} takes milliseconds - {insertTime}. Average Insert Time - {averageInsertTime}";
                 output.WriteLine(messageForInsert);
 
                 // Операция изменения данных
@@ -149,15 +149,23 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     Class2 updatedClass = createdClass;
 
                     updatedClass.Field21 = RandomStringGenerator(randomizer);
+                    updatedClass.Class1 = randomizer.Next(0, 2) != 0 ? masterClass1 : masterClass2;
+
+                    foreach (Class3 detail in updatedClass.Class3)
+                    {
+                        detail.Field31 = string.Concat("detail_", RandomStringGenerator(randomizer));
+                        detail.Field32 = string.Concat("detail_", RandomStringGenerator(randomizer));
+                    }
+
                     DataObject[] dataObjects = new DataObject[] { updatedClass };
                     dataService.UpdateObjects(ref dataObjects);
                 }
 
                 timerForUpdateData.Stop();
                 float updateTime = timerForUpdateData.ElapsedMilliseconds;
-                int averageUpdateTime = (int)updateTime / RECORDS_COUNT;
+                int averageUpdateTime = (int)updateTime / _recordsCount;
 
-                string messageForUpdate = $"{dataService.GetType()} Update {RECORDS_COUNT} records {auditCaption} takes milliseconds - {updateTime}. Average Update Time - {averageUpdateTime}";
+                string messageForUpdate = $"{dataService.GetType()} Update {_recordsCount} records {auditCaption} takes milliseconds - {updateTime}. Average Update Time - {averageUpdateTime}";
                 output.WriteLine(messageForUpdate);
 
                 // Операция удаления данных
@@ -166,19 +174,17 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                 foreach (Class2 createdClass in createdDataObjects)
                 {
-                    Class2 updatedClass = createdClass;
-
-                    updatedClass.Field21 = RandomStringGenerator(randomizer);
-                    DataObject[] dataObjects = new DataObject[] { updatedClass };
+                    Class2 deletedClass = createdClass;
+                    DataObject[] dataObjects = new DataObject[] { deletedClass };
                     dataObjects[0].SetStatus(ObjectStatus.Deleted);
                     dataService.UpdateObjects(ref dataObjects);
                 }
 
                 timerForDeleteData.Stop();
                 float deleteTime = timerForDeleteData.ElapsedMilliseconds;
-                int averageDeleteTime = (int)deleteTime / RECORDS_COUNT;
+                int averageDeleteTime = (int)deleteTime / _recordsCount;
 
-                string messageForDelete = $"{dataService.GetType()} Delete {RECORDS_COUNT} records {auditCaption} takes milliseconds - {deleteTime}. Average Delete Time - {averageDeleteTime}";
+                string messageForDelete = $"{dataService.GetType()} Delete {_recordsCount} records {auditCaption} takes milliseconds - {deleteTime}. Average Delete Time - {averageDeleteTime}";
                 output.WriteLine(messageForDelete);
             }
         }
