@@ -196,5 +196,55 @@ namespace NewPlatform.Flexberry.AuditBigData.Tests {
                 return ResourceManager.GetString("PostgresScript", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE &quot;Class2&quot; (
+        ///
+        /// &quot;primaryKey&quot; UUID,
+        ///
+        /// &quot;Field21&quot; String,
+        ///
+        /// &quot;Field22&quot; String,
+        ///
+        /// &quot;CreateTime&quot; DATETIME,
+        ///
+        /// &quot;Creator&quot; String,
+        ///
+        /// &quot;EditTime&quot; DATETIME,
+        ///
+        /// &quot;Editor&quot; String,
+        ///
+        /// &quot;Class1&quot; UUID,
+        ///
+        /// &quot;Class4&quot; UUID
+        ///
+        ///) ENGINE = MergeTree() ORDER BY (&quot;primaryKey&quot;);
+        ///
+        ///
+        ///CREATE TABLE &quot;Class1&quot; (
+        ///
+        /// &quot;primaryKey&quot; UUID,
+        ///
+        /// &quot;Field11&quot; String,
+        ///
+        /// &quot;Field12&quot; String,
+        ///
+        /// &quot;CreateTime&quot; DATETIME,
+        ///
+        /// &quot;Creator&quot; String,
+        ///
+        /// &quot;EditTime&quot; DATETIME,
+        ///
+        /// &quot;Editor&quot; String
+        ///
+        ///) ENGINE = MergeTree() ORDER BY (&quot;primaryKey&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ClickHouseScript
+        {
+            get
+            {
+                return ResourceManager.GetString("ClickHouseScript", resourceCulture);
+            }
+        }
     }
 }

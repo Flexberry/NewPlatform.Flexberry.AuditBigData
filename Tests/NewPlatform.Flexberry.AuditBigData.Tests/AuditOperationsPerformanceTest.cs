@@ -38,6 +38,77 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// Вставка записей без использования аудита.
         /// </summary>
         [Fact]
+        public void PerformaceTestClickHouse()
+        {
+            // Два класса мастеров. Будут назначаться рандомно.
+            Class1 masterClass1 = new Class1
+            {
+                Field11 = "MasterClass_1_Field_1",
+                Field12 = "MasterClass_1_Field_2",
+            };
+
+            Class1 masterClass2 = new Class1
+            {
+                Field11 = "MasterClass_2_Field_1",
+                Field12 = "MasterClass_2_Field_2",
+            };
+
+            Random randomizer = new Random();
+
+            foreach (IDataService dataService in DataServices)
+            {
+                List<DataObject> createdDataObjects = new List<DataObject>();
+
+                Stopwatch timerForInsertData = new Stopwatch();
+                timerForInsertData.Start();
+
+                // Создаем записи.
+                for (int i = 1; i <= _recordsCount; i++)
+                {
+                    // Два класса детейлов.
+                    Class3 detailClass1 = new Class3
+                    {
+                        Field31 = string.Concat("detail_1_", RandomStringGenerator(randomizer)),
+                        Field32 = string.Concat("detail_1_", RandomStringGenerator(randomizer)),
+                    };
+
+                    Class3 detailClass2 = new Class3
+                    {
+                        Field31 = string.Concat("detail_2_", RandomStringGenerator(randomizer)),
+                        Field32 = string.Concat("detail_2_", RandomStringGenerator(randomizer)),
+                    };
+
+                    Class2 class2 = new Class2
+                    {
+                        Field21 = RandomStringGenerator(randomizer),
+                        Field22 = RandomStringGenerator(randomizer),
+                        Class1 = randomizer.Next(0, 2) != 0 ? masterClass1 : masterClass2,
+                    };
+
+                    class2.Class3.Add(detailClass1);
+                    class2.Class3.Add(detailClass2);
+
+                    createdDataObjects.Add(class2);
+                    DataObject[] dataObjects = new DataObject[] { class2 };
+
+                    IDataService clickHousedataServices = ClickHouseDataServices;
+                    dataService.AuditService.Audit = clickHousedataServices.AuditService.Audit;
+                    dataService.UpdateObjects(ref dataObjects);
+                }
+
+                timerForInsertData.Stop();
+                float insertTime = timerForInsertData.ElapsedMilliseconds;
+                int averageInsertTime = (int)insertTime / _recordsCount;
+
+                string messageForInsert = $"{dataService.GetType()} Insert {_recordsCount} records takes milliseconds - {insertTime}. Average Insert Time - {averageInsertTime}";
+                output.WriteLine(messageForInsert);
+            }
+        }
+
+        /// <summary>
+        /// Вставка записей без использования аудита.
+        /// </summary>
+        [Fact]
         public void PerformaceTestWithoutAudit()
         {
             ExecuteOperations(true);
