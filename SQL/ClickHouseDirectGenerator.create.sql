@@ -15,7 +15,7 @@ CREATE TABLE AuditMergeTree
     "HeadAuditEntity" Nullable(UUID)
 )
 ENGINE = MergeTree()
-ORDER BY primaryKey
+ORDER BY OperationTime
 SETTINGS index_granularity = 8192;
 
 
