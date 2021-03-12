@@ -19,4 +19,4 @@ ORDER BY primaryKey
 SETTINGS index_granularity = 8192;
 
 
-CREATE TABLE Audit AS AuditMergeTree ENGINE = Buffer(test, AuditMergeTree, 16, 1, 2, 10, 10000, 100000, 1000000);
+CREATE TABLE Audit AS AuditMergeTree ENGINE = Buffer(test, AuditMergeTree, 16, 0.1, 2, 10, 10000, 100000, 1000000);
