@@ -35,7 +35,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// ¬ставка записей без использовани€ аудита.
+        /// ¬ставка записей с использованием аудита на основе Ѕƒ clickhouse.
         /// </summary>
         [Fact]
         public void PerformaceTestClickHouse()
@@ -106,7 +106,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// ¬ставка записей без использовани€ аудита.
+        /// ¬ставка, изменение и удаление записей без использовани€ аудита.
         /// </summary>
         [Fact]
         public void PerformaceTestWithoutAudit()
@@ -115,7 +115,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// ¬ставка записей с использованием аудита.
+        /// ¬ставка, изменение и удаление записей с использованием аудита.
         /// </summary>
         [Fact]
         public void PerformaceTestWithAudit()
