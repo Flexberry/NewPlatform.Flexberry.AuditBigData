@@ -6,22 +6,22 @@
     public interface IFieldAuditData
     {
         /// <summary>
-        /// Field.
+        /// Field value getter.
         /// </summary>
         public string Field { get; }
 
         /// <summary>
-        /// MainChange.
+        /// MainChange value getter.
         /// </summary>
         public IFieldAuditData MainChange { get; }
 
         /// <summary>
-        /// NewValue.
+        /// NewValue value getter.
         /// </summary>
         public string NewValue { get; }
 
         /// <summary>
-        /// OldValue.
+        /// OldValue value getter.
         /// </summary>
         public string OldValue { get; }
     }
