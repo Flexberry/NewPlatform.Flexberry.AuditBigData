@@ -66,10 +66,12 @@
             {
                 try
                 {
+                    string serializedFields = auditSerializer.Serialize(auditAdditionalInfo);
+
                     AuditRecord auditRecord = CreateRatifyingAuditRecord(
                         ratificationAuditParameters.CurrentTime,
                         ratificationAuditParameters.ExecutionResult,
-                        auditSerializer.Serialize(auditAdditionalInfo),
+                        serializedFields,
                         auditAdditionalInfo.AuditRecordPrimaryKey);
 
                     dataService.UpdateObject(auditRecord);
@@ -109,16 +111,20 @@
 
             try
             {
+                string objectType = commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName;
+                string operationType = TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation).ToString();
+                string serializedFields = auditSerializer.Serialize(commonAuditParameters);
+
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
                     commonAuditParameters.UserName,
                     commonAuditParameters.FullUserLogin,
-                    commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName,
+                    objectType,
                     commonAuditParameters.OperatedObject.__PrimaryKey,
                     commonAuditParameters.CurrentTime,
-                    TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation).ToString(),
+                    operationType,
                     commonAuditParameters.ExecutionResult,
                     commonAuditParameters.OperationSource,
-                    auditSerializer.Serialize(commonAuditParameters),
+                    serializedFields,
                     commonAuditParameters.AuditEntityGuid);
 
                 dataService.UpdateObject(auditRecord);
@@ -151,16 +157,19 @@
 
             try
             {
+                string operationType = CustomOperation2BigDataCustomOperation(checkedCustomAuditParameters.CustomOperation);
+                string serializedFields = auditSerializer.Serialize(checkedCustomAuditParameters.CustomAuditFieldList);
+
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
                     checkedCustomAuditParameters.UserName,
                     checkedCustomAuditParameters.FullUserLogin,
                     checkedCustomAuditParameters.AuditObjectTypeOrDescription,
                     checkedCustomAuditParameters.AuditObjectPrimaryKey,
                     checkedCustomAuditParameters.CurrentTime,
-                    CustomOperation2BigDataCustomOperation(checkedCustomAuditParameters.CustomOperation),
+                    operationType,
                     checkedCustomAuditParameters.ExecutionResult,
                     checkedCustomAuditParameters.OperationSource,
-                    auditSerializer.Serialize(checkedCustomAuditParameters.CustomAuditFieldList),
+                    serializedFields,
                     checkedCustomAuditParameters.AuditEntityGuid);
 
                 dataService.UpdateObject(auditRecord);
@@ -199,11 +208,12 @@
         {
             var primaryAuditRecord = new AuditRecord();
             primaryAuditRecord.SetExistObjectPrimaryKey(headAuditEntityPrimaryKey);
+            string operationType = AuditOperationType.Ratify.ToString();
 
             return new AuditRecord()
             {
                 OperationTime = operationTime,
-                OperationType = AuditOperationType.Ratify.ToString(),
+                OperationType = operationType,
                 ExecutionStatus = executionStatus,
                 SerializedFields = serializedFields,
                 HeadAuditEntity = primaryAuditRecord,
@@ -224,9 +234,11 @@
             string serializedFields,
             object headAuditEntityPrimaryKey)
         {
+            ExecutionStatus executionStatus = ExecutionVariant2ExecutionStatus(executionVariant);
+
             return CreateRatifyingAuditRecord(
                 operationTime,
-                ExecutionVariant2ExecutionStatus(executionVariant),
+                executionStatus,
                 serializedFields,
                 headAuditEntityPrimaryKey);
         }
@@ -304,6 +316,8 @@
             string serializedFields,
             Guid? auditEntityGuid)
         {
+            ExecutionStatus executionStatus = ExecutionVariant2ExecutionStatus(executionVariant);
+
             return CreatePrimaryAuditRecord(
                 userName,
                 userLogin,
@@ -311,7 +325,7 @@
                 objectPrimaryKey,
                 operationTime,
                 operationType,
-                ExecutionVariant2ExecutionStatus(executionVariant),
+                executionStatus,
                 source,
                 serializedFields,
                 auditEntityGuid);
