@@ -112,7 +112,7 @@
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
                     commonAuditParameters.UserName,
                     commonAuditParameters.FullUserLogin,
-                    commonAuditParameters.OperatedObject.GetType().FullName,
+                    commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName,
                     commonAuditParameters.OperatedObject.__PrimaryKey,
                     commonAuditParameters.CurrentTime,
                     TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation).ToString(),
