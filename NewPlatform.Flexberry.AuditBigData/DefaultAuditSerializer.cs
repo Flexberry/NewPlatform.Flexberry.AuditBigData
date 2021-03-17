@@ -79,10 +79,11 @@
 
             DataObject oldDataObject = commonAuditParameters.OldVersionOperatedObject;
             DataObject operatedObject = commonAuditParameters.OperatedObject;
-            View auditView = Information.GetView(commonAuditParameters.AuditView, operatedObject.GetType());
+            Type operatedObjectType = operatedObject.GetType();
+            View auditView = Information.GetView(commonAuditParameters.AuditView, operatedObjectType);
             if (auditView == null)
             {
-                throw new CantFindViewException(operatedObject.GetType(), commonAuditParameters.AuditView);
+                throw new CantFindViewException(operatedObjectType, commonAuditParameters.AuditView);
             }
 
             var fieldAuditDataList = new List<FieldAuditData>();
@@ -143,12 +144,12 @@
             }
 
             // Набор детейлов возможно как-то изменили.
-            var detailObjectOldArray = oldDetailArray.GetAllObjects();
-            var detailObjectNewList = newDetailArray.GetAllObjects().ToList();
-            for (var i = 0; i < detailObjectOldArray.Length; i++)
+            DataObject[] detailObjectOldArray = oldDetailArray.GetAllObjects();
+            List<DataObject> detailObjectNewList = newDetailArray.GetAllObjects().ToList();
+            for (int i = 0; i < detailObjectOldArray.Length; i++)
             {
-                var detailObjectOld = detailObjectOldArray[i];
-                var detailObjectNew = newDetailArray.GetByKey(detailObjectOld.__PrimaryKey);
+                DataObject detailObjectOld = detailObjectOldArray[i];
+                DataObject detailObjectNew = newDetailArray.GetByKey(detailObjectOld.__PrimaryKey);
 
                 if (detailObjectNew == null || detailObjectNew.GetStatus() == ObjectStatus.Deleted)
                 {
@@ -545,24 +546,40 @@
         [JsonObject(IsReference = true)]
         private class FieldAuditData : IFieldAuditData
         {
+            /// <summary>
+            /// Field value setter.
+            /// </summary>
             [JsonProperty(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
             public string Field { private get; set; }
 
+            /// <summary>
+            /// MainChange value setter.
+            /// </summary>
             [JsonProperty(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
             public FieldAuditData MainChange { private get; set; }
 
+            /// <summary>
+            /// NewValue value setter.
+            /// </summary>
             [JsonProperty(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
             public string NewValue { private get; set; }
 
+            /// <summary>
+            /// OldValue value setter.
+            /// </summary>
             [JsonProperty(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
             public string OldValue { private get; set; }
 
+            /// <inheritdoc/>
             string IFieldAuditData.Field => Field;
 
+            /// <inheritdoc/>
             IFieldAuditData IFieldAuditData.MainChange => MainChange;
 
+            /// <inheritdoc/>
             string IFieldAuditData.NewValue => NewValue;
 
+            /// <inheritdoc/>
             string IFieldAuditData.OldValue => OldValue;
         }
     }
