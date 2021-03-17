@@ -88,11 +88,11 @@ CREATE TABLE Class3 (
 
  primaryKey UUID NOT NULL,
 
- UserName VARCHAR(255) NULL,
+ UserName VARCHAR(1024) NULL,
 
- UserLogin VARCHAR(255) NULL,
+ UserLogin VARCHAR(1024) NULL,
 
- ObjectType VARCHAR(255) NULL,
+ ObjectType VARCHAR(1024) NULL,
 
  ObjectPrimaryKey BYTEA NULL,
 

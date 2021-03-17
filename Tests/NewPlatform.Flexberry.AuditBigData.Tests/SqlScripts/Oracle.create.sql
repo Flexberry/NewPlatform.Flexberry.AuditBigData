@@ -97,11 +97,11 @@ CREATE TABLE "Audit"
 
 	"primaryKey" RAW(16) NOT NULL,
 
-	"UserName" NVARCHAR2(255) NULL,
+	"UserName" NVARCHAR2(1024) NULL,
 
-	"UserLogin" NVARCHAR2(255) NULL,
+	"UserLogin" NVARCHAR2(1024) NULL,
 
-	"ObjectType" NVARCHAR2(255) NULL,
+	"ObjectType" NVARCHAR2(1024) NULL,
 
 	"ObjectPrimaryKey" RAW(255) NULL,
 
