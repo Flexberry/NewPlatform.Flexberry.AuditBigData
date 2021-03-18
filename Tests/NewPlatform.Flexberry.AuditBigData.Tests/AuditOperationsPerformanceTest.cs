@@ -1,4 +1,4 @@
-namespace ICSSoft.STORMNET.Business.Audit.Tests
+п»їnamespace ICSSoft.STORMNET.Business.Audit.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -11,36 +11,36 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
     using Xunit.Abstractions;
 
     /// <summary>
-    /// Проверка быстродействия операций с данными. С использование аудита и без.
+    /// РџСЂРѕРІРµСЂРєР° Р±С‹СЃС‚СЂРѕРґРµР№СЃС‚РІРёСЏ РѕРїРµСЂР°С†РёР№ СЃ РґР°РЅРЅС‹РјРё. РЎ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ Р°СѓРґРёС‚Р° Рё Р±РµР·.
     /// </summary>
     public class AuditOperationsPerformanceTest : BaseAuditServiceTest
     {
         /// <summary>
-        /// Количество создаваемых записей для теста.
+        /// РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕР·РґР°РІР°РµРјС‹С… Р·Р°РїРёСЃРµР№ РґР»СЏ С‚РµСЃС‚Р°.
         /// </summary>
         private const int _recordsCount = 1000;
 
         /// <summary>
-        /// Экземпляр класса для вывода сообщений.
+        /// Р­РєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° РґР»СЏ РІС‹РІРѕРґР° СЃРѕРѕР±С‰РµРЅРёР№.
         /// </summary>
         private readonly ITestOutputHelper output;
 
         /// <summary>
-        /// Конструктор.
+        /// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
         /// </summary>
-        /// <param name="output"> Экземпляр класса для вывода сообщений.</param>
+        /// <param name="output"> Р­РєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° РґР»СЏ РІС‹РІРѕРґР° СЃРѕРѕР±С‰РµРЅРёР№.</param>
         public AuditOperationsPerformanceTest(ITestOutputHelper output)
         {
             this.output = output;
         }
 
         /// <summary>
-        /// Вставка записей с использованием аудита на основе БД clickhouse.
+        /// Р’СЃС‚Р°РІРєР° Р·Р°РїРёСЃРµР№ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Р°СѓРґРёС‚Р° РЅР° РѕСЃРЅРѕРІРµ Р‘Р” clickhouse.
         /// </summary>
         [Fact]
         public void PerformaceTestClickHouse()
         {
-            // Два класса мастеров. Будут назначаться рандомно.
+            // Р”РІР° РєР»Р°СЃСЃР° РјР°СЃС‚РµСЂРѕРІ. Р‘СѓРґСѓС‚ РЅР°Р·РЅР°С‡Р°С‚СЊСЃСЏ СЂР°РЅРґРѕРјРЅРѕ.
             Class1 masterClass1 = new Class1
             {
                 Field11 = "MasterClass_1_Field_1",
@@ -62,10 +62,10 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 Stopwatch timerForInsertData = new Stopwatch();
                 timerForInsertData.Start();
 
-                // Создаем записи.
+                // РЎРѕР·РґР°РµРј Р·Р°РїРёСЃРё.
                 for (int i = 1; i <= _recordsCount; i++)
                 {
-                    // Два класса детейлов.
+                    // Р”РІР° РєР»Р°СЃСЃР° РґРµС‚РµР№Р»РѕРІ.
                     Class3 detailClass1 = new Class3
                     {
                         Field31 = string.Concat("detail_1_", RandomStringGenerator(randomizer)),
@@ -106,7 +106,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// Вставка, изменение и удаление записей без использования аудита.
+        /// Р’СЃС‚Р°РІРєР°, РёР·РјРµРЅРµРЅРёРµ Рё СѓРґР°Р»РµРЅРёРµ Р·Р°РїРёСЃРµР№ Р±РµР· РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Р°СѓРґРёС‚Р°.
         /// </summary>
         [Fact]
         public void PerformaceTestWithoutAudit()
@@ -115,7 +115,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// Вставка, изменение и удаление записей с использованием аудита.
+        /// Р’СЃС‚Р°РІРєР°, РёР·РјРµРЅРµРЅРёРµ Рё СѓРґР°Р»РµРЅРёРµ Р·Р°РїРёСЃРµР№ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Р°СѓРґРёС‚Р°.
         /// </summary>
         [Fact]
         public void PerformaceTestWithAudit()
@@ -138,12 +138,12 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// Выполнить операции создания, изменения и удаления записей.
+        /// Р’С‹РїРѕР»РЅРёС‚СЊ РѕРїРµСЂР°С†РёРё СЃРѕР·РґР°РЅРёСЏ, РёР·РјРµРЅРµРЅРёСЏ Рё СѓРґР°Р»РµРЅРёСЏ Р·Р°РїРёСЃРµР№.
         /// </summary>
-        /// <param name="disableAudit)">Флаг отключения аудита.</param>
+        /// <param name="disableAudit)">Р¤Р»Р°Рі РѕС‚РєР»СЋС‡РµРЅРёСЏ Р°СѓРґРёС‚Р°.</param>
         private void ExecuteOperations(bool disableAudit = false)
         {
-            // Два класса мастеров. Будут назначаться рандомно.
+            // Р”РІР° РєР»Р°СЃСЃР° РјР°СЃС‚РµСЂРѕРІ. Р‘СѓРґСѓС‚ РЅР°Р·РЅР°С‡Р°С‚СЊСЃСЏ СЂР°РЅРґРѕРјРЅРѕ.
             Class1 masterClass1 = new Class1
             {
                 Field11 = "MasterClass_1_Field_1",
@@ -162,7 +162,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             {
                 if (disableAudit)
                 {
-                    // Отключаем аудит.
+                    // РћС‚РєР»СЋС‡Р°РµРј Р°СѓРґРёС‚.
                     dataService.AuditService.DisableAudit();
                     dataService.AuditService.AppSetting.AuditConnectionStringName = string.Empty;
                 }
@@ -172,10 +172,10 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 Stopwatch timerForInsertData = new Stopwatch();
                 timerForInsertData.Start();
 
-                // Создаем записи.
+                // РЎРѕР·РґР°РµРј Р·Р°РїРёСЃРё.
                 for (int i = 1; i <= _recordsCount; i++)
                 {
-                    // Два класса детейлов.
+                    // Р”РІР° РєР»Р°СЃСЃР° РґРµС‚РµР№Р»РѕРІ.
                     Class3 detailClass1 = new Class3
                     {
                         Field31 = string.Concat("detail_1_", RandomStringGenerator(randomizer)),
@@ -211,7 +211,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 string messageForInsert = $"{dataService.GetType()} Insert {_recordsCount} records {auditCaption} takes milliseconds - {insertTime}. Average Insert Time - {averageInsertTime}";
                 output.WriteLine(messageForInsert);
 
-                // Операция изменения данных
+                // РћРїРµСЂР°С†РёСЏ РёР·РјРµРЅРµРЅРёСЏ РґР°РЅРЅС‹С…
                 Stopwatch timerForUpdateData = new Stopwatch();
                 timerForUpdateData.Start();
 
@@ -239,7 +239,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 string messageForUpdate = $"{dataService.GetType()} Update {_recordsCount} records {auditCaption} takes milliseconds - {updateTime}. Average Update Time - {averageUpdateTime}";
                 output.WriteLine(messageForUpdate);
 
-                // Операция удаления данных
+                // РћРїРµСЂР°С†РёСЏ СѓРґР°Р»РµРЅРёСЏ РґР°РЅРЅС‹С…
                 Stopwatch timerForDeleteData = new Stopwatch();
                 timerForDeleteData.Start();
 
@@ -261,9 +261,9 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         }
 
         /// <summary>
-        /// Формирует случайную строку для значений полей.
+        /// Р¤РѕСЂРјРёСЂСѓРµС‚ СЃР»СѓС‡Р°Р№РЅСѓСЋ СЃС‚СЂРѕРєСѓ РґР»СЏ Р·РЅР°С‡РµРЅРёР№ РїРѕР»РµР№.
         /// </summary>
-        /// <param name="random"> Экземпляр генератора, созданного заранее.</param>
+        /// <param name="random"> Р­РєР·РµРјРїР»СЏСЂ РіРµРЅРµСЂР°С‚РѕСЂР°, СЃРѕР·РґР°РЅРЅРѕРіРѕ Р·Р°СЂР°РЅРµРµ.</param>
         private string RandomStringGenerator(Random random)
         {
             int length = 7;
