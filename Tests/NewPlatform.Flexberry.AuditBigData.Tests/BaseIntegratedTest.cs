@@ -8,10 +8,12 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
     using System.Data.SqlClient;
     using System.Linq;
     using System.Threading;
+    using ClickHouse.Ado;
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using NewPlatform.Flexberry.AuditBigData;
     using NewPlatform.Flexberry.AuditBigData.Tests;
+    using NewPlatform.Flexberry.ORM;
     using Npgsql;
     using Oracle.ManagedDataAccess.Client;
 
@@ -32,6 +34,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// The data services for temp databases (for <see cref="DataServices"/>).
         /// </summary>
         private readonly List<IDataService> _dataServices = new List<IDataService>();
+
+        /// <summary>
+        /// The data services for temp clickhouse database (for <see cref="DataServices"/>).
+        /// </summary>
+        private readonly IDataService _clickHousedataServices;
 
         /// <summary>
         /// Flag: Indicates whether "Dispose" has already been called.
@@ -62,6 +69,14 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             }
         }
 
+        protected virtual string ClickHouseScript
+        {
+            get
+            {
+                return Resources.ClickHouseScript;
+            }
+        }
+
         /// <summary>
         /// Data services for temp databases.
         /// </summary>
@@ -73,6 +88,20 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     throw new ObjectDisposedException(null);
 
                 return _dataServices;
+            }
+        }
+
+        /// <summary>
+        /// Data services for temp databases.
+        /// </summary>
+        protected IDataService ClickHouseDataServices
+        {
+            get
+            {
+                if (_disposed)
+                    throw new ObjectDisposedException(null);
+
+                return _clickHousedataServices;
             }
         }
 
@@ -210,6 +239,43 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 }
             }
 
+            if (!string.IsNullOrWhiteSpace(ClickHouseScript) && ConnectionStringClickHouse != poolingFalseConst)
+            {
+                if (!(tempDbNamePrefix.Length <= 12)) // Max length is 63 (-18 -32).
+                    throw new ArgumentException();
+                if (!char.IsLetter(tempDbNamePrefix[0])) // Database names must have an alphabetic first character.
+                    throw new ArgumentException();
+
+                var settings = new ClickHouseConnectionSettings(ConnectionStringClickHouse);
+
+                using (var connection = new ClickHouseConnection(settings))
+                {
+                    connection.Open();
+
+                    using (var cmd = new ClickHouseCommand(connection))
+                    {
+                        cmd.CommandText = $"CREATE DATABASE \"{_databaseName}\"";
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                settings = new ClickHouseConnectionSettings($"{ConnectionStringClickHouse};Database={_databaseName}");
+                using (var connection = new ClickHouseConnection(settings))
+                {
+                    connection.Open();
+                    using (var cmd = new ClickHouseCommand(connection, ClickHouseScript))
+                        cmd.ExecuteNonQuery();
+                    string connectionString = $"{ConnectionStringClickHouse};Database={_databaseName}";
+                    ClickHouseDataService dataService = CreateClickHouseDataService(connectionString);
+                    _clickHousedataServices = dataService;
+
+                    InitAuditService(dataService);
+
+                    string appName = "_audit" + dataService.AuditService.AppSetting.AppName;
+                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{appName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connectionString));
+                }
+            }
+
             configuration.Save();
             ConfigurationManager.RefreshSection(connectionStringsConfigSectionName);
         }
@@ -244,6 +310,15 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             return new OracleDataService { CustomizationString = connectionString };
         }
 
+        /// <summary>
+        /// Creates the <see cref="ClickHouseDataService"/> instance for temp database.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <returns>The <see cref="ClickHouseDataService"/> instance.</returns>
+        protected virtual ClickHouseDataService CreateClickHouseDataService(string connectionString)
+        {
+            return new ClickHouseDataService { CustomizationString = connectionString };
+        }
 
         /// <summary>
         /// Deletes the temporary databases and perform other cleaning.
@@ -260,45 +335,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 {
                     foreach (var ds in _dataServices)
                     {
-                        if (ds is PostgresDataService)
-                        {
-                            using (var conn = new NpgsqlConnection(ConnectionStringPostgres))
-                            {
-                                conn.Open();
-                                using (var command = new NpgsqlCommand($"DROP DATABASE \"{_databaseName}\";", conn))
-                                    command.ExecuteNonQuery();
-                            }
-                        }
-
-                        if (ds is MSSQLDataService)
-                        {
-                            using (var connection = new SqlConnection(ConnectionStringMssql))
-                            {
-                                connection.Open();
-                                using (var command = new SqlCommand($"DROP DATABASE {_databaseName}", connection))
-                                    command.ExecuteNonQuery();
-                            }
-                        }
-
-                        if (ds is OracleDataService)
-                        {
-                            using (var connection = new OracleConnection(ConnectionStringOracle))
-                            {
-                                connection.Open();
-                                using (var command = connection.CreateCommand())
-                                {
-                                    command.CommandText = $"DROP USER {_tmpUserNameOracle} CASCADE";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
-                        }
-
-                        Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                        string connectionStringsConfigSectionName = "connectionStrings";
-                        ConnectionStringsSection connectionStringsSection = (ConnectionStringsSection)configuration.GetSection(connectionStringsConfigSectionName);
-                        connectionStringsSection.ConnectionStrings.Remove($"{ds.AuditService.AppSetting.AppName}_{ds.AuditService.AppSetting.AuditConnectionStringName}");
-                        configuration.Save();
-                        ConfigurationManager.RefreshSection(connectionStringsConfigSectionName);
+                        ExecuteDisposeForDataservice(ds);
                     }
                 }
                 catch (Exception)
@@ -307,6 +344,68 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             }
 
             _disposed = true;
+        }
+
+        /// <summary>
+        /// Execute dispose for target service.
+        /// </summary>
+        /// <param name="service">Disposing service.</param>
+        protected virtual void ExecuteDisposeForDataservice(IDataService service)
+        {
+            if (service is PostgresDataService)
+            {
+                using (var conn = new NpgsqlConnection(ConnectionStringPostgres))
+                {
+                    conn.Open();
+                    using (var command = new NpgsqlCommand($"DROP DATABASE \"{_databaseName}\";", conn))
+                        command.ExecuteNonQuery();
+                }
+            }
+
+            if (service is MSSQLDataService)
+            {
+                using (var connection = new SqlConnection(ConnectionStringMssql))
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand($"DROP DATABASE {_databaseName}", connection))
+                        command.ExecuteNonQuery();
+                }
+            }
+
+            if (service is OracleDataService)
+            {
+                using (var connection = new OracleConnection(ConnectionStringOracle))
+                {
+                    connection.Open();
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandText = $"DROP USER {_tmpUserNameOracle} CASCADE";
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+
+            if (service is ClickHouseDataService)
+            {
+                var settings = new ClickHouseConnectionSettings(ConnectionStringClickHouse);
+
+                using (var connection = new ClickHouseConnection(settings))
+                {
+                    connection.Open();
+                    using (var command = connection.CreateCommand())
+                    {
+                        /*command.CommandText = $"DROP USER {_tmpUserNameOracle} CASCADE";
+                        command.ExecuteNonQuery();*/
+                    }
+                }
+            }
+
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string connectionStringsConfigSectionName = "connectionStrings";
+            ConnectionStringsSection connectionStringsSection = (ConnectionStringsSection)configuration.GetSection(connectionStringsConfigSectionName);
+            connectionStringsSection.ConnectionStrings.Remove($"{service.AuditService.AppSetting.AppName}_{service.AuditService.AppSetting.AuditConnectionStringName}");
+            configuration.Save();
+            ConfigurationManager.RefreshSection(connectionStringsConfigSectionName);
         }
 
         /// <summary>
@@ -344,6 +443,16 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 // ADO.NET doesn't close the connection with pooling. We have to disable it explicitly.
                 // http://stackoverflow.com/questions/9033356/connection-still-idle-after-close
                 return $"{poolingFalseConst}{ConfigurationManager.ConnectionStrings["ConnectionStringOracle"]}";
+            }
+        }
+
+        private static string ConnectionStringClickHouse
+        {
+            get
+            {
+                // ADO.NET doesn't close the connection with pooling. We have to disable it explicitly.
+                // http://stackoverflow.com/questions/9033356/connection-still-idle-after-close
+                return $"{ConfigurationManager.ConnectionStrings["ConnectionStringClickHouse"]}";
             }
         }
 
