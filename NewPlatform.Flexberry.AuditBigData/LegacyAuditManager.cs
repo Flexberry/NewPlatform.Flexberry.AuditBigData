@@ -204,6 +204,11 @@
             string serializedFields,
             object headAuditEntityPrimaryKey)
         {
+            if (headAuditEntityPrimaryKey == null)
+            {
+                throw new ArgumentNullException(nameof(headAuditEntityPrimaryKey));
+            }
+
             var primaryAuditRecord = new AuditRecord();
             primaryAuditRecord.SetExistObjectPrimaryKey(headAuditEntityPrimaryKey);
             string operationType = AuditOperationType.Ratify.ToString();
