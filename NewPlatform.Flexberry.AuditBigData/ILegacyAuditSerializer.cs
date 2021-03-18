@@ -5,9 +5,9 @@
     using ICSSoft.STORMNET.Business.Audit.HelpStructures;
 
     /// <summary>
-    /// Audit serializer interface.
+    /// Legacy audit serializer interface.
     /// </summary>
-    public interface IAuditSerializer
+    public interface ILegacyAuditSerializer
     {
         /// <summary>
         /// Deserializes the specified string value to <see cref="IEnumerable{IFieldAuditData}"/>.

@@ -2,29 +2,27 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using ICSSoft.STORMNET;
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit;
     using ICSSoft.STORMNET.Business.Audit.Exceptions;
-    using ICSSoft.STORMNET.Business.Audit.HelpStructures;
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using ICSSoft.STORMNET.KeyGen;
 
     /// <summary>
-    /// Audit manager.
+    /// Legacy audit manager.
     /// </summary>
-    public class AuditManager : IAudit
+    public class LegacyAuditManager : IAudit
     {
-        private readonly IAuditSerializer auditSerializer;
+        private readonly ILegacyAuditSerializer auditSerializer;
         private readonly IDataService dataService;
 
         /// <summary>
-        /// Initialize new instance <see cref="AuditManager"/>.
+        /// Initialize new <see cref="LegacyAuditManager"/> instance.
         /// </summary>
-        /// <param name="dataService">IDataSerice instance to write <see cref="AuditRecord"/>.</param>
-        /// <param name="auditSerializer">IAuditSerializer instance to serialize fields audit data.</param>
-        public AuditManager(IDataService dataService, IAuditSerializer auditSerializer)
+        /// <param name="dataService"><see cref="IDataService"/> instance to write <see cref="AuditRecord"/>.</param>
+        /// <param name="auditSerializer"><see cref="ILegacyAuditSerializer"/> instance to serialize fields audit data.</param>
+        public LegacyAuditManager(IDataService dataService, ILegacyAuditSerializer auditSerializer)
         {
             if (dataService == null)
             {

@@ -13,9 +13,9 @@
     using Newtonsoft.Json.Serialization;
 
     /// <summary>
-    /// The default <see cref="IAuditSerializer"/> implementation.
+    /// <see cref="ILegacyAuditSerializer"/> implementation.
     /// </summary>
-    public class DefaultAuditSerializer : IAuditSerializer
+    public class LegacyAuditSerializer : ILegacyAuditSerializer
     {
         /// <summary>
         /// Сообщение, которое возникнет, если на формирование полей выдана ошибочная операция.

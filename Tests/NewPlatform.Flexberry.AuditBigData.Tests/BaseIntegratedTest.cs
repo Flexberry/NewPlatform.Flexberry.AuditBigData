@@ -363,7 +363,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// Провести инициализацию сервиса аудита.
         /// </summary>
         /// <param name="dataService">Сервис данных аудита.</param>
-        private void InitAuditService(IDataService dataService)
+        private static void InitAuditService(IDataService dataService)
         {
             var auditAppSetting = new AuditAppSetting
             {
@@ -379,7 +379,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             var auditDsSetting = new AuditDSSetting(dataService, $"{auditAppSetting.AppName}_{auditAppSetting.AuditConnectionStringName}");
             auditAppSetting.AuditDSSettings.Add(auditDsSetting);
 
-            AuditService.InitAuditService(auditAppSetting, new AuditManager(dataService, new DefaultAuditSerializer()), dataService.AuditService);
+            AuditService.InitAuditService(auditAppSetting, new LegacyAuditManager(dataService, new LegacyAuditSerializer()), dataService.AuditService);
         }
     }
 }
