@@ -24,6 +24,6 @@ CREATE TABLE "Audit" (
 
  "SerializedFields" String,
 
- "HeadAuditEntity" UUID
+ "HeadAuditEntity" Nullable(UUID)
 
 ) ENGINE = MergeTree() ORDER BY ("OperationTime");
