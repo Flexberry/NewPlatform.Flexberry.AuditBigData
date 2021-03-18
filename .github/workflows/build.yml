@@ -21,6 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     # Service containers to run with `runner-job`
     services:
+          # Label used to access the service container
+      clickhouse:
+        # Docker Hub image
+        image: flexberry/clickhouse-official
+        ports:
+          # Maps tcp port 9000 on service container to the host
+          - 19000:9000
       # Label used to access the service container
       postgres:
         # Docker Hub image
@@ -56,8 +63,3 @@ jobs:
 
       - name: Integration test under mono
         run: mono ./testrunner/xunit.runner.console.2.4.1/tools/net461/xunit.console.exe ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/net461/NewPlatform.Flexberry.AuditBigData.Tests.dll
-
-      - name: Integration test under dotnet
-        run: dotnet test ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/netcoreapp3.1/NewPlatform.Flexberry.AuditBigData.Tests.dll
-
-        
