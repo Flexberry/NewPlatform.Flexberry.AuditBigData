@@ -26,4 +26,4 @@ CREATE TABLE "Audit" (
 
  "HeadAuditEntity" UUID
 
-) ENGINE = MergeTree() ORDER BY ("primaryKey");
+) ENGINE = MergeTree() ORDER BY ("OperationTime");
