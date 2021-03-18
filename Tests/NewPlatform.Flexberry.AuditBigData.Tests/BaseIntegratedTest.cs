@@ -239,7 +239,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(ClickHouseScript) && ConnectionStringClickHouse != poolingFalseConst)
+            if (!string.IsNullOrWhiteSpace(ClickHouseScript) && ConnectionStringClickHouse != string.Empty)
             {
                 if (!(tempDbNamePrefix.Length <= 12)) // Max length is 63 (-18 -32).
                     throw new ArgumentException();
