@@ -92,6 +92,35 @@ CREATE TABLE "Class3"
 ) ;
 
 
+CREATE TABLE "Audit"
+(
+
+	"primaryKey" RAW(16) NOT NULL,
+
+	"UserName" NVARCHAR2(1024) NULL,
+
+	"UserLogin" NVARCHAR2(1024) NULL,
+
+	"ObjectType" NVARCHAR2(1024) NULL,
+
+	"ObjectPrimaryKey" RAW(255) NULL,
+
+	"OperationTime" DATE NOT NULL,
+
+	"OperationType" NVARCHAR2(255) NOT NULL,
+
+	"ExecutionStatus" NVARCHAR2(10) NOT NULL,
+
+	"Source" NVARCHAR2(255) NULL,
+
+	"SerializedFields" NCLOB NULL,
+
+	"HeadAuditEntity" RAW(16) NULL,
+
+	 PRIMARY KEY ("primaryKey")
+) ;
+
+
 CREATE TABLE "STORMNETLOCKDATA"
 (
 
@@ -289,362 +318,11 @@ CREATE TABLE "ApplicationLog"
 ) ;
 
 
-CREATE TABLE "STORMAG"
-(
 
-	"primaryKey" RAW(16) NOT NULL,
+ALTER TABLE "Audit"
+	ADD CONSTRAINT "Audit_FAudit_0" FOREIGN KEY ("HeadAuditEntity") REFERENCES "Audit" ("primaryKey");
 
-	"Name" nvarchar2(80) NOT NULL,
-
-	"Login" nvarchar2(50) NULL,
-
-	"Pwd" nvarchar2(50) NULL,
-
-	"IsUser" NUMBER(1) NOT NULL,
-
-	"IsGroup" NUMBER(1) NOT NULL,
-
-	"IsRole" NUMBER(1) NOT NULL,
-
-	"ConnString" nvarchar2(255) NULL,
-
-	"Enabled" NUMBER(1) NULL,
-
-	"Email" nvarchar2(80) NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey"),
-
-	"Comment" nvarchar2(255) NULL,
-) ;
-
-
-CREATE TABLE "STORMLG"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Group_m0" RAW(16) NOT NULL,
-
-	"User_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMAuObjType"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Name" nvarchar2(255) NOT NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMAuEntity"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"ObjectPrimaryKey" nvarchar2(38) NOT NULL,
-
-	"OperationTime" DATE NOT NULL,
-
-	"OperationType" nvarchar2(100) NOT NULL,
-
-	"ExecutionResult" nvarchar2(12) NOT NULL,
-
-	"Source" nvarchar2(255) NOT NULL,
-
-	"SerializedField" nvarchar2(2000) NULL,
-
-	"User_m0" RAW(16) NOT NULL,
-
-	"ObjectType_m0" RAW(16) NOT NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMAuField"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Field" nvarchar2(100) NOT NULL,
-
-	"OldValue" nvarchar2(2000) NULL,
-
-	"NewValue" nvarchar2(2000) NULL,
-
-	"MainChange_m0" RAW(16) NULL,
-
-	"AuditEntity_m0" RAW(16) NOT NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMI"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"User_m0" RAW(16) NOT NULL,
-
-	"Agent_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "Session"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"UserKey" RAW(16) NULL,
-
-	"StartedAt" DATE NULL,
-
-	"LastAccess" DATE NULL,
-
-	"Closed" NUMBER(1) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMS"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Name" nvarchar2(100) NOT NULL,
-
-	"Type" nvarchar2(100) NULL,
-
-	"IsAttribute" NUMBER(1) NOT NULL,
-
-	"IsOperation" NUMBER(1) NOT NULL,
-
-	"IsView" NUMBER(1) NOT NULL,
-
-	"IsClass" NUMBER(1) NOT NULL,
-
-	"SharedOper" NUMBER(1) NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey"),
-
-	"Comment" nvarchar2(255) NULL,
-) ;
-
-
-CREATE TABLE "STORMP"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Subject_m0" RAW(16) NOT NULL,
-
-	"Agent_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMF"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"FilterText" CLOB NULL,
-
-	"Name" nvarchar2(255) NULL,
-
-	"FilterTypeNView" nvarchar2(255) NULL,
-
-	"Subject_m0" RAW(16) NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMAC"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"TypeAccess" nvarchar2(7) NULL,
-
-	"Filter_m0" RAW(16) NULL,
-
-	"Permition_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMLO"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Class_m0" RAW(16) NOT NULL,
-
-	"Operation_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMLA"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"View_m0" RAW(16) NOT NULL,
-
-	"Attribute_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMLV"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"Class_m0" RAW(16) NOT NULL,
-
-	"View_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-CREATE TABLE "STORMLR"
-(
-
-	"primaryKey" RAW(16) NOT NULL,
-
-	"StartDate" DATE NULL,
-
-	"EndDate" DATE NULL,
-
-	"Agent_m0" RAW(16) NOT NULL,
-
-	"Role_m0" RAW(16) NOT NULL,
-
-	"CreateTime" DATE NULL,
-
-	"Creator" nvarchar2(255) NULL,
-
-	"EditTime" DATE NULL,
-
-	"Editor" nvarchar2(255) NULL,
-
-	 PRIMARY KEY ("primaryKey")
-) ;
-
-
-
-ALTER TABLE "Class2"
-	ADD CONSTRAINT "Class2_FClass1_0" FOREIGN KEY ("Class1") REFERENCES "Class1" ("primaryKey");
-
-CREATE INDEX "Class2_IClass1" on "Class2" ("Class1");
-
-ALTER TABLE "Class2"
-	ADD CONSTRAINT "Class2_FClass4_0" FOREIGN KEY ("Class4") REFERENCES "Class4" ("primaryKey");
-
-CREATE INDEX "Class2_IClass4" on "Class2" ("Class4");
-
-ALTER TABLE "Class3"
-	ADD CONSTRAINT "Class3_FClass2_0" FOREIGN KEY ("Class2") REFERENCES "Class2" ("primaryKey");
-
-CREATE INDEX "Class3_IClass2" on "Class3" ("Class2");
+CREATE INDEX "Audit_IHeadAuditEntity" on "Audit" ("HeadAuditEntity");
 
 ALTER TABLE "STORMWEBSEARCH"
 	ADD CONSTRAINT "STORMWEBSEARCH_FSTORMFILT_6521" FOREIGN KEY ("FilterSetting_m0") REFERENCES "STORMFILTERSETTING" ("primaryKey");
@@ -654,68 +332,5 @@ ALTER TABLE "STORMFILTERDETAIL"
 
 ALTER TABLE "STORMFILTERLOOKUP"
 	ADD CONSTRAINT "STORMFILTERLOOKUP_FSTORMF_1583" FOREIGN KEY ("FilterSetting_m0") REFERENCES "STORMFILTERSETTING" ("primaryKey");
-
-ALTER TABLE "STORMLG"
-	ADD CONSTRAINT "STORMLG_FSTORMAG_0" FOREIGN KEY ("Group_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMLG"
-	ADD CONSTRAINT "STORMLG_FSTORMAG_1" FOREIGN KEY ("User_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMAuEntity"
-	ADD CONSTRAINT "STORMAuEntity_FSTORMAG_0" FOREIGN KEY ("User_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMAuEntity"
-	ADD CONSTRAINT "STORMAuEntity_FSTORMAuObj_3287" FOREIGN KEY ("ObjectType_m0") REFERENCES "STORMAuObjType" ("primaryKey");
-
-ALTER TABLE "STORMAuField"
-	ADD CONSTRAINT "STORMAuField_FSTORMAuField_0" FOREIGN KEY ("MainChange_m0") REFERENCES "STORMAuField" ("primaryKey");
-
-ALTER TABLE "STORMAuField"
-	ADD CONSTRAINT "STORMAuField_FSTORMAuEntity_0" FOREIGN KEY ("AuditEntity_m0") REFERENCES "STORMAuEntity" ("primaryKey");
-
-ALTER TABLE "STORMI"
-	ADD CONSTRAINT "STORMI_FSTORMAG_0" FOREIGN KEY ("User_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMI"
-	ADD CONSTRAINT "STORMI_FSTORMAG_1" FOREIGN KEY ("Agent_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMP"
-	ADD CONSTRAINT "STORMP_FSTORMS_0" FOREIGN KEY ("Subject_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMP"
-	ADD CONSTRAINT "STORMP_FSTORMAG_0" FOREIGN KEY ("Agent_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMF"
-	ADD CONSTRAINT "STORMF_FSTORMS_0" FOREIGN KEY ("Subject_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMAC"
-	ADD CONSTRAINT "STORMAC_FSTORMF_0" FOREIGN KEY ("Filter_m0") REFERENCES "STORMF" ("primaryKey");
-
-ALTER TABLE "STORMAC"
-	ADD CONSTRAINT "STORMAC_FSTORMP_0" FOREIGN KEY ("Permition_m0") REFERENCES "STORMP" ("primaryKey");
-
-ALTER TABLE "STORMLO"
-	ADD CONSTRAINT "STORMLO_FSTORMS_0" FOREIGN KEY ("Class_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMLO"
-	ADD CONSTRAINT "STORMLO_FSTORMS_1" FOREIGN KEY ("Operation_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMLA"
-	ADD CONSTRAINT "STORMLA_FSTORMS_0" FOREIGN KEY ("View_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMLA"
-	ADD CONSTRAINT "STORMLA_FSTORMS_1" FOREIGN KEY ("Attribute_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMLV"
-	ADD CONSTRAINT "STORMLV_FSTORMS_0" FOREIGN KEY ("Class_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMLV"
-	ADD CONSTRAINT "STORMLV_FSTORMS_1" FOREIGN KEY ("View_m0") REFERENCES "STORMS" ("primaryKey");
-
-ALTER TABLE "STORMLR"
-	ADD CONSTRAINT "STORMLR_FSTORMAG_0" FOREIGN KEY ("Agent_m0") REFERENCES "STORMAG" ("primaryKey");
-
-ALTER TABLE "STORMLR"
-	ADD CONSTRAINT "STORMLR_FSTORMAG_1" FOREIGN KEY ("Role_m0") REFERENCES "STORMAG" ("primaryKey");
 
 

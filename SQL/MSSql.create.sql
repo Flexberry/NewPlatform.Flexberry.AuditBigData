@@ -6,13 +6,13 @@ CREATE TABLE [Audit] (
 
 	 [primaryKey] UNIQUEIDENTIFIER  NOT NULL,
 
-	 [UserName] VARCHAR(255)  NULL,
+	 [UserName] NVARCHAR(1024)  NULL,
 
-	 [UserLogin] VARCHAR(255)  NULL,
+	 [UserLogin] NVARCHAR(1024)  NULL,
 
-	 [ObjectType] VARCHAR(255)  NULL,
+	 [ObjectType] NVARCHAR(1024)  NULL,
 
-	 [ObjectPrimaryKey] LONGVARBINARY  NULL,
+	 [ObjectPrimaryKey] NVARCHAR(38)  NULL,
 
 	 [OperationTime] DATETIME  NOT NULL,
 

@@ -74,7 +74,7 @@ namespace NewPlatform.Flexberry.AuditBigData
         // *** Start programmer edit section *** (AuditRecord.UserName CustomAttributes)
 
         // *** End programmer edit section *** (AuditRecord.UserName CustomAttributes)
-        [StrLen(255)]
+        [StrLen(1024)]
         public virtual string UserName
         {
             get
@@ -106,7 +106,7 @@ namespace NewPlatform.Flexberry.AuditBigData
         // *** Start programmer edit section *** (AuditRecord.UserLogin CustomAttributes)
 
         // *** End programmer edit section *** (AuditRecord.UserLogin CustomAttributes)
-        [StrLen(255)]
+        [StrLen(1024)]
         public virtual string UserLogin
         {
             get
@@ -138,7 +138,7 @@ namespace NewPlatform.Flexberry.AuditBigData
         // *** Start programmer edit section *** (AuditRecord.ObjectType CustomAttributes)
 
         // *** End programmer edit section *** (AuditRecord.ObjectType CustomAttributes)
-        [StrLen(255)]
+        [StrLen(1024)]
         public virtual string ObjectType
         {
             get

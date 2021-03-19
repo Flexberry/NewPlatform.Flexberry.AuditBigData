@@ -17,7 +17,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="NewPlatform.Flexberry.Caching" Version="2.0.0-beta03" />
+    <PackageReference Include="NewPlatform.Flexberry.ClickHouse.Ado" Version="1.1.17-alpha02" />
     <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0-beta13" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.ClickHouseDataService" Version="6.0.0-alpha02" />
     <PackageReference Include="NewPlatform.Flexberry.ORM.MSSQLDataService" Version="6.0.0-beta11" />
     <PackageReference Include="NewPlatform.Flexberry.ORM.OracleDataService" Version="6.0.0-beta12" />
     <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0-beta12" />
@@ -26,6 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NewPlatform.Flexberry.Security" Version="3.0.0-beta03" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
