@@ -38,15 +38,27 @@
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
-                lcs.LimitFunction = langDef.GetFunction(langDef.funcEQ, new VariableDef(langDef.GuidType, Information.ExtractPropertyPath<AuditRecord>(x => x.ObjectPrimaryKey)), class1.__PrimaryKey);
-                DataObject[] auditEntities = dataService.LoadObjects(lcs);
-                AuditRecord auditRecord = auditEntities.Cast<AuditRecord>().FirstOrDefault();
+                lcs.LimitFunction = langDef.GetFunction(
+                    langDef.funcEQ,
+                    new VariableDef(langDef.GuidType, Information.ExtractPropertyPath<AuditRecord>(x => x.ObjectPrimaryKey)),
+                    class1.__PrimaryKey);
+                DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
+                DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
+                string operationType = AuditOperationType.Insert.ToString();
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
 
                 // TODO: проверка полей аудита.
 
                 // Assert.
-                Assert.Equal("Создание", auditRecord.OperationType);
-                Assert.Single(auditEntities);
+                Assert.Single(primaryAuditObjects);
+                Assert.Single(primaryAuditObjects
+                    .Cast<AuditRecord>()
+                    .Where(x => x.OperationType == operationType));
+                Assert.Single(ratifyingAuditObjects);
+                Assert.Single(ratifyingAuditObjects
+                    .Cast<AuditRecord>()
+                    .Where(x => x.OperationType == AuditOperationType.Ratify.ToString())
+                    .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
             }
         }
 
@@ -83,17 +95,29 @@
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
-                lcs.LimitFunction = langDef.GetFunction(langDef.funcEQ, new VariableDef(langDef.GuidType, Information.ExtractPropertyPath<AuditRecord>(x => x.ObjectPrimaryKey)), class1.__PrimaryKey);
+                lcs.LimitFunction = langDef.GetFunction(
+                    langDef.funcEQ,
+                    new VariableDef(langDef.GuidType, Information.ExtractPropertyPath<AuditRecord>(x => x.ObjectPrimaryKey)),
+                    class1.__PrimaryKey);
                 string sortProperty = Information.ExtractPropertyPath<AuditRecord>(x => x.OperationTime);
                 lcs.ColumnsSort = new[] { new ColumnsSortDef(sortProperty, SortOrder.Desc) };
-                DataObject[] auditEntities = dataService.LoadObjects(lcs);
-                AuditRecord auditRecord = auditEntities.Cast<AuditRecord>().FirstOrDefault();
+                DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
+                DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
+                string operationType = AuditOperationType.Update.ToString();
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
 
                 // TODO: проверка полей аудита.
 
                 // Assert.
-                Assert.Equal("Изменение", auditRecord.OperationType);
-                Assert.Equal(2, auditEntities.Length);
+                Assert.Equal(2, primaryAuditObjects.Length);
+                Assert.Single(primaryAuditObjects
+                    .Cast<AuditRecord>()
+                    .Where(x => x.OperationType == operationType));
+                Assert.Equal(2, ratifyingAuditObjects.Length);
+                Assert.Single(ratifyingAuditObjects
+                    .Cast<AuditRecord>()
+                    .Where(x => x.OperationType == AuditOperationType.Ratify.ToString())
+                    .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
             }
         }
 
@@ -126,17 +150,29 @@
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
-                lcs.LimitFunction = langDef.GetFunction(langDef.funcEQ, new VariableDef(langDef.GuidType, Information.ExtractPropertyPath<AuditRecord>(x => x.ObjectPrimaryKey)), class1.__PrimaryKey);
+                lcs.LimitFunction = langDef.GetFunction(
+                    langDef.funcEQ,
+                    new VariableDef(langDef.GuidType, Information.ExtractPropertyPath<AuditRecord>(x => x.ObjectPrimaryKey)),
+                    class1.__PrimaryKey);
                 string sortProperty = Information.ExtractPropertyPath<AuditRecord>(x => x.OperationTime);
                 lcs.ColumnsSort = new[] { new ColumnsSortDef(sortProperty, SortOrder.Desc) };
-                DataObject[] auditEntities = dataService.LoadObjects(lcs);
-                AuditRecord auditRecord = auditEntities.Cast<AuditRecord>().FirstOrDefault();
+                DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
+                DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
+                string operationType = AuditOperationType.Delete.ToString();
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
 
                 // TODO: проверка полей аудита.
 
                 // Assert.
-                Assert.Equal("Удаление", auditRecord.OperationType);
-                Assert.Equal(2, auditEntities.Length);
+                Assert.Equal(2, primaryAuditObjects.Length);
+                Assert.Single(primaryAuditObjects
+                    .Cast<AuditRecord>()
+                    .Where(x => x.OperationType == operationType));
+                Assert.Equal(2, ratifyingAuditObjects.Length);
+                Assert.Single(ratifyingAuditObjects
+                    .Cast<AuditRecord>()
+                    .Where(x => x.OperationType == AuditOperationType.Ratify.ToString())
+                    .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
             }
         }
 

@@ -37,7 +37,7 @@
         /// <summary>
         /// Вставка записей с использованием аудита на основе БД clickhouse.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ClickHouseDataService is not implemented yet. Skip performance test.")]
         public void PerformaceTestClickHouse()
         {
             // Два класса мастеров. Будут назначаться рандомно.
@@ -108,7 +108,7 @@
         /// <summary>
         /// Вставка, изменение и удаление записей без использования аудита.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Skip performance test.")]
         public void PerformaceTestWithoutAudit()
         {
             ExecuteOperations(true);
@@ -117,7 +117,7 @@
         /// <summary>
         /// Вставка, изменение и удаление записей с использованием аудита.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Skip performance test.")]
         public void PerformaceTestWithAudit()
         {
             ExecuteOperations();
