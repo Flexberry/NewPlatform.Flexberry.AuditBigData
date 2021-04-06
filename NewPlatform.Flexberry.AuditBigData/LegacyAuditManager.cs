@@ -79,9 +79,7 @@
                         LogService.LogInfoFormat("Audit, RatifyAuditOperation: у записи с ключом {0} статус изменён на {1}", auditAdditionalInfo.AuditRecordPrimaryKey, ratificationAuditParameters.ExecutionResult);
                     }
                 }
-#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     LogService.LogError("Audit, RatifyAuditOperation: " + ex.Message, ex);
                     failedGuids.Add(auditAdditionalInfo.AuditRecordPrimaryKey);
