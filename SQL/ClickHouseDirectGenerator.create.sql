@@ -1,4 +1,4 @@
-CREATE TABLE AuditMergeTree
+CREATE TABLE Audit
 (
     "primaryKey" UUID,
     "UserName" String,
@@ -19,4 +19,4 @@ ORDER BY OperationTime
 SETTINGS index_granularity = 8192;
 
 
-CREATE TABLE Audit AS AuditMergeTree ENGINE = Buffer(test, AuditMergeTree, 16, 0.1, 2, 10, 10000, 100000, 1000000);
+CREATE TABLE AuditBuffer AS Audit ENGINE = Buffer(test, Audit, 16, 0.1, 2, 10, 10000, 100000, 1000000);
