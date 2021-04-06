@@ -27,9 +27,9 @@
         /// <summary>
         /// Serializes the specified <see cref="IEnumerable{IFieldAuditData}"/> value to string.
         /// </summary>
-        /// <param name="customAuditFields">The enumerator over a collection of <see cref="CustomAuditField"/>.</param>
+        /// <param name="items">The enumerator over a collection of <see cref="CustomAuditField"/>.</param>
         /// <returns>Serialized value.</returns>
-        string Serialize(IEnumerable<CustomAuditField> customAuditFields);
+        string Serialize(IEnumerable<CustomAuditField> items);
 
         /// <summary>
         /// Serializes the specified <see cref="CommonAuditParameters"/> value to string.
@@ -39,10 +39,10 @@
         string Serialize(CommonAuditParameters commonAuditParameters);
 
         /// <summary>
-        /// Serializes the specified <see cref="IEnumerable{AuditField}"/> value to string.
+        /// Serializes the specified <see cref="IEnumerable{IFieldAuditData}"/> value to string.
         /// </summary>
-        /// <param name="auditFields">The enumerator over a collection of <see cref="AuditField"/>.</param>
+        /// <param name="items">The enumerator over a collection of <see cref="IFieldAuditData"/>.</param>
         /// <returns>Serialized value.</returns>
-        string Serialize(IEnumerable<AuditField> auditFields);
+        string Serialize(IEnumerable<IFieldAuditData> items);
     }
 }
