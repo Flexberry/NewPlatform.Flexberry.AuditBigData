@@ -79,7 +79,9 @@
                         LogService.LogInfoFormat("Audit, RatifyAuditOperation: у записи с ключом {0} статус изменён на {1}", auditAdditionalInfo.AuditRecordPrimaryKey, ratificationAuditParameters.ExecutionResult);
                     }
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     LogService.LogError("Audit, RatifyAuditOperation: " + ex.Message, ex);
                     failedGuids.Add(auditAdditionalInfo.AuditRecordPrimaryKey);
@@ -108,7 +110,7 @@
             try
             {
                 string objectType = commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName;
-                AuditOperationType auditOperationType = TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
+                AuditOperationType auditOperationType = LegacyAuditConverter.TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
                 string operationType = EnumCaption.GetCaptionFor(auditOperationType);
                 string serializedFields = auditSerializer.Serialize(commonAuditParameters);
 
@@ -154,7 +156,7 @@
 
             try
             {
-                string operationType = OperationType2BigDataOperationType(checkedCustomAuditParameters.CustomOperation);
+                string operationType = LegacyAuditConverter.OperationType2BigDataOperationType(checkedCustomAuditParameters.CustomOperation);
                 string serializedFields = auditSerializer.Serialize(checkedCustomAuditParameters.CustomAuditFieldList);
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
@@ -236,7 +238,7 @@
             string serializedFields,
             object headAuditEntityPrimaryKey)
         {
-            ExecutionStatus executionStatus = ExecutionVariant2ExecutionStatus(executionVariant);
+            ExecutionStatus executionStatus = LegacyAuditConverter.ExecutionVariant2ExecutionStatus(executionVariant);
 
             return CreateRatifyingAuditRecord(
                 operationTime,
@@ -318,7 +320,7 @@
             string serializedFields,
             Guid? auditEntityGuid)
         {
-            ExecutionStatus executionStatus = ExecutionVariant2ExecutionStatus(executionVariant);
+            ExecutionStatus executionStatus = LegacyAuditConverter.ExecutionVariant2ExecutionStatus(executionVariant);
 
             return CreatePrimaryAuditRecord(
                 userName,
@@ -331,37 +333,6 @@
                 source,
                 serializedFields,
                 auditEntityGuid);
-        }
-
-        private static string OperationType2BigDataOperationType(string value)
-        {
-            const string CustomOperation = "CustomOperation";
-
-            object o = EnumCaption.GetValueFor(value, typeof(tTypeOfAuditOperation));
-            if (o != null)
-            {
-                var typeOfAuditOperation = (tTypeOfAuditOperation)o;
-                AuditOperationType auditOperationType = TypeOfAuditOperation2AuditOperationType(typeOfAuditOperation);
-
-                return EnumCaption.GetCaptionFor(auditOperationType);
-            }
-
-            if (value == CustomOperation)
-            {
-                return EnumCaption.GetCaptionFor(AuditOperationType.Custom);
-            }
-
-            return value;
-        }
-
-        private static ExecutionStatus ExecutionVariant2ExecutionStatus(tExecutionVariant value)
-        {
-            return (ExecutionStatus)Enum.Parse(typeof(ExecutionStatus), value.ToString());
-        }
-
-        private static AuditOperationType TypeOfAuditOperation2AuditOperationType(tTypeOfAuditOperation value)
-        {
-            return (AuditOperationType)Enum.Parse(typeof(AuditOperationType), value.ToString(), true);
         }
     }
 }

@@ -109,6 +109,46 @@
             return Serialize(fieldAuditDataList);
         }
 
+        /// <inheritdoc/>
+        public string Serialize(IEnumerable<AuditField> auditFields)
+        {
+            IEnumerable<FieldAuditData> fieldAuditDataItems = null;
+
+            if (auditFields != null)
+            {
+                var accumulator = new List<FieldAuditData>();
+                ConvertAuditFields(accumulator, auditFields, null);
+                fieldAuditDataItems = accumulator.ToArray();
+            }
+
+            return Serialize(fieldAuditDataItems);
+        }
+
+        private static void ConvertAuditFields(List<FieldAuditData> accumulator, IEnumerable<AuditField> items, object mainChangePrimaryKey, FieldAuditData convertedMainChange = null)
+        {
+            IEnumerable<AuditField> parents = mainChangePrimaryKey == null ?
+                items.Where(x => x.MainChange?.__PrimaryKey == null) :
+                items.Where(x => x.MainChange?.__PrimaryKey != null && x.MainChange.__PrimaryKey.Equals(mainChangePrimaryKey));
+
+            foreach (AuditField parent in parents)
+            {
+                var convertedItem = new FieldAuditData()
+                {
+                    MainChange = convertedMainChange,
+                    Field = parent.Field,
+                    NewValue = parent.NewValue,
+                    OldValue = parent.OldValue,
+                };
+
+                accumulator.Add(convertedItem);
+
+                foreach (AuditField child in items.Where(x => x.MainChange?.__PrimaryKey != null && x.MainChange.__PrimaryKey.Equals(parent.__PrimaryKey)))
+                {
+                    ConvertAuditFields(accumulator, items, parent.__PrimaryKey, convertedItem);
+                }
+            }
+        }
+
         /// <summary>
         /// Генерация экземпляра <see cref="FieldAuditData"/> для операции добавления или удаления набора детейлов.
         /// </summary>

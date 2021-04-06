@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using ICSSoft.STORMNET.Business.Audit;
     using ICSSoft.STORMNET.Business.Audit.HelpStructures;
+    using ICSSoft.STORMNET.Business.Audit.Objects;
 
     /// <summary>
     /// Legacy audit serializer interface.
@@ -36,5 +37,12 @@
         /// <param name="commonAuditParameters">Объект, содержащий данные для аудита <see cref="CustomAuditParameters"/>.</param>
         /// <returns>Serialized value.</returns>
         string Serialize(CommonAuditParameters commonAuditParameters);
+
+        /// <summary>
+        /// Serializes the specified <see cref="IEnumerable{AuditField}"/> value to string.
+        /// </summary>
+        /// <param name="auditFields">The enumerator over a collection of <see cref="AuditField"/>.</param>
+        /// <returns>Serialized value.</returns>
+        string Serialize(IEnumerable<AuditField> auditFields);
     }
 }
