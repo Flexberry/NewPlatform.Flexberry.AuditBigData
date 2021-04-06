@@ -110,7 +110,8 @@
             try
             {
                 string objectType = commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName;
-                string operationType = TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation).ToString();
+                AuditOperationType auditOperationType = TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
+                string operationType = EnumCaption.GetCaptionFor(auditOperationType);
                 string serializedFields = auditSerializer.Serialize(commonAuditParameters);
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
@@ -338,14 +339,18 @@
         {
             const string CustomOperation = "CustomOperation";
 
-            if (Enum.TryParse<tTypeOfAuditOperation>(value, out var operationType))
+            object o = EnumCaption.GetValueFor(value, typeof(tTypeOfAuditOperation));
+            if (o != null)
             {
-                return TypeOfAuditOperation2AuditOperationType(operationType).ToString();
+                var typeOfAuditOperation = (tTypeOfAuditOperation)o;
+                AuditOperationType auditOperationType = TypeOfAuditOperation2AuditOperationType(typeOfAuditOperation);
+
+                return EnumCaption.GetCaptionFor(auditOperationType);
             }
 
             if (value == CustomOperation)
             {
-                return AuditOperationType.Custom.ToString();
+                return EnumCaption.GetCaptionFor(AuditOperationType.Custom);
             }
 
             return value;
