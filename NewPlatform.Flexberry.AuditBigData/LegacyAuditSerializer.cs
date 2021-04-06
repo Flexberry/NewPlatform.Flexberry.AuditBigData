@@ -60,10 +60,10 @@
         }
 
         /// <inheritdoc/>
-        public string Serialize(IEnumerable<CustomAuditField> customAuditFields)
+        public string Serialize(IEnumerable<CustomAuditField> items)
         {
             // Преобразуем в последовательность данных аудита полей.
-            IEnumerable<FieldAuditData> fieldAuditDataItems = customAuditFields?
+            IEnumerable<FieldAuditData> fieldAuditDataItems = items?
                 .Select(x => new FieldAuditData() { Field = x.FieldName, NewValue = x.NewFieldValue, OldValue = x.OldFieldValue });
 
             return Serialize(fieldAuditDataItems);
@@ -107,6 +107,44 @@
             }
 
             return Serialize(fieldAuditDataList);
+        }
+
+        /// <inheritdoc/>
+        public string Serialize(IEnumerable<IFieldAuditData> items)
+        {
+            List<FieldAuditData> accumulator = null;
+
+            if (items != null)
+            {
+                accumulator = new List<FieldAuditData>();
+                Convert2FieldAuditDataItems(accumulator, items, null);
+            }
+
+            return Serialize(accumulator);
+        }
+
+        private static void Convert2FieldAuditDataItems(List<FieldAuditData> accumulator, IEnumerable<IFieldAuditData> items, IFieldAuditData mainChange, FieldAuditData convertedMainChange = null)
+        {
+            IEnumerable<IFieldAuditData> parents = items
+                .Where(x => x.MainChange == mainChange);
+
+            foreach (IFieldAuditData parent in parents)
+            {
+                var convertedItem = new FieldAuditData()
+                {
+                    MainChange = convertedMainChange,
+                    Field = parent.Field,
+                    NewValue = parent.NewValue,
+                    OldValue = parent.OldValue,
+                };
+
+                accumulator.Add(convertedItem);
+
+                foreach (IFieldAuditData child in items.Where(x => x.MainChange == parent))
+                {
+                    Convert2FieldAuditDataItems(accumulator, items, parent, convertedItem);
+                }
+            }
         }
 
         /// <summary>
@@ -538,11 +576,14 @@
             }
         }
 
-        private static string Serialize(IEnumerable<FieldAuditData> fieldAuditDataItems)
+        private static string Serialize(IEnumerable<FieldAuditData> items)
         {
-            return fieldAuditDataItems != null && fieldAuditDataItems.Any() ? JsonConvert.SerializeObject(fieldAuditDataItems.ToArray()) : null;
+            return items != null && items.Any() ? JsonConvert.SerializeObject(items.ToArray()) : null;
         }
 
+        /// <summary>
+        /// <see cref="IFieldAuditData"/> implementation.
+        /// </summary>
         [JsonObject(IsReference = true)]
         private class FieldAuditData : IFieldAuditData
         {

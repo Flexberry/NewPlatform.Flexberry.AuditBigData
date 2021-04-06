@@ -110,7 +110,8 @@
             try
             {
                 string objectType = commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName;
-                string operationType = TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation).ToString();
+                AuditOperationType auditOperationType = LegacyAuditConverter.TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
+                string operationType = EnumCaption.GetCaptionFor(auditOperationType);
                 string serializedFields = auditSerializer.Serialize(commonAuditParameters);
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
@@ -155,7 +156,7 @@
 
             try
             {
-                string operationType = CustomOperation2BigDataCustomOperation(checkedCustomAuditParameters.CustomOperation);
+                string operationType = LegacyAuditConverter.OperationType2BigDataOperationType(checkedCustomAuditParameters.CustomOperation);
                 string serializedFields = auditSerializer.Serialize(checkedCustomAuditParameters.CustomAuditFieldList);
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
@@ -237,7 +238,7 @@
             string serializedFields,
             object headAuditEntityPrimaryKey)
         {
-            ExecutionStatus executionStatus = ExecutionVariant2ExecutionStatus(executionVariant);
+            ExecutionStatus executionStatus = LegacyAuditConverter.ExecutionVariant2ExecutionStatus(executionVariant);
 
             return CreateRatifyingAuditRecord(
                 operationTime,
@@ -319,7 +320,7 @@
             string serializedFields,
             Guid? auditEntityGuid)
         {
-            ExecutionStatus executionStatus = ExecutionVariant2ExecutionStatus(executionVariant);
+            ExecutionStatus executionStatus = LegacyAuditConverter.ExecutionVariant2ExecutionStatus(executionVariant);
 
             return CreatePrimaryAuditRecord(
                 userName,
@@ -332,33 +333,6 @@
                 source,
                 serializedFields,
                 auditEntityGuid);
-        }
-
-        private static string CustomOperation2BigDataCustomOperation(string value)
-        {
-            const string CustomOperation = "CustomOperation";
-
-            if (Enum.TryParse<tTypeOfAuditOperation>(value, out var operationType))
-            {
-                return TypeOfAuditOperation2AuditOperationType(operationType).ToString();
-            }
-
-            if (value == CustomOperation)
-            {
-                return AuditOperationType.Custom.ToString();
-            }
-
-            return value;
-        }
-
-        private static ExecutionStatus ExecutionVariant2ExecutionStatus(tExecutionVariant value)
-        {
-            return (ExecutionStatus)Enum.Parse(typeof(ExecutionStatus), value.ToString());
-        }
-
-        private static AuditOperationType TypeOfAuditOperation2AuditOperationType(tTypeOfAuditOperation value)
-        {
-            return (AuditOperationType)Enum.Parse(typeof(AuditOperationType), value.ToString(), true);
         }
     }
 }
