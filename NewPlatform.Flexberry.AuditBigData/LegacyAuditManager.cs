@@ -154,7 +154,7 @@
 
             try
             {
-                string operationType = CustomOperation2BigDataCustomOperation(checkedCustomAuditParameters.CustomOperation);
+                string operationType = OperationType2BigDataOperationType(checkedCustomAuditParameters.CustomOperation);
                 string serializedFields = auditSerializer.Serialize(checkedCustomAuditParameters.CustomAuditFieldList);
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
@@ -333,7 +333,7 @@
                 auditEntityGuid);
         }
 
-        private static string CustomOperation2BigDataCustomOperation(string value)
+        private static string OperationType2BigDataOperationType(string value)
         {
             const string CustomOperation = "CustomOperation";
 
