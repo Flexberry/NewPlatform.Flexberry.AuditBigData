@@ -22,7 +22,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" />
-    <file src="NewPlatform.Flexberry.AuditBigData.AuditBigData.XML" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.AuditBigData.XML" />
+    <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\netstandard2.0\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" />
+    <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\netstandard2.0\NewPlatform.Flexberry.AuditBigData.AuditBigData.xml" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.AuditBigData.xml" />
+    <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net45\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" target="lib\net45\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" />
+    <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net45\NewPlatform.Flexberry.AuditBigData.AuditBigData.xml" target="lib\net45\NewPlatform.Flexberry.AuditBigData.AuditBigData.xml" />
+    <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net461\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" target="lib\net461\NewPlatform.Flexberry.AuditBigData.AuditBigData.dll" />
+    <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net461\NewPlatform.Flexberry.AuditBigData.AuditBigData.xml" target="lib\net461\NewPlatform.Flexberry.AuditBigData.AuditBigData.xml" />
   </files>
 </package>
