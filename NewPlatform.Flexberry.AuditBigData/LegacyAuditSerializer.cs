@@ -9,6 +9,7 @@
     using ICSSoft.STORMNET.Business.Audit.HelpStructures;
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using ICSSoft.STORMNET.Exceptions;
+    using Microsoft.Spatial;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -21,6 +22,18 @@
         /// Сообщение, которое возникнет, если на формирование полей выдана ошибочная операция.
         /// </summary>
         private const string ErrorMessageOnFields = "Exception";
+
+        /// <summary>
+        /// Преобразовывает пространственные данные в формат хранения в БД.
+        /// </summary>
+        /// <returns> Преобразованные пространственные данные.</returns>
+        private static WellKnownTextSqlFormatter Formatter
+        {
+            get
+            {
+                return SpatialImplementation.CurrentImplementation.CreateWellKnownTextSqlFormatter(false);
+            }
+        }
 
         /// <inheritdoc/>
         public IEnumerable<IFieldAuditData> Deserialize(string value)
@@ -281,17 +294,25 @@
                             auditView.GetViewForMaster(propertyName));
                     }
                     else
-                    { // Вероятнее всего это собственное свойство.
+                    {
+                        // Вероятнее всего это собственное свойство.
+                        string curPropertyValueStr = curPropertyValue != null ? curPropertyValue.ToString() : null;
+                        if (curPropertyValue != null && curPropertyValue is Geometry)
+                        {
+                            curPropertyValueStr = Formatter.Write((Geometry)curPropertyValue);
+                        }
+
                         var fieldAuditData = new FieldAuditData { Field = propertyName };
+
                         switch (typeOfAuditOperation)
                         {
                             case tTypeOfAuditOperation.DELETE:
-                                fieldAuditData.OldValue = curPropertyValue != null ? curPropertyValue.ToString() : null;
+                                fieldAuditData.OldValue = curPropertyValue != null ? curPropertyValueStr : null;
                                 fieldAuditData.NewValue = AuditConstants.FieldValueDeletedConst;
                                 break;
                             case tTypeOfAuditOperation.INSERT:
                                 fieldAuditData.OldValue = AuditConstants.FieldValueDeletedConst;
-                                fieldAuditData.NewValue = curPropertyValue != null ? curPropertyValue.ToString() : null;
+                                fieldAuditData.NewValue = curPropertyValue != null ? curPropertyValueStr : null;
                                 break;
                             default:
                                 fieldAuditData.OldValue = ErrorMessageOnFields;
@@ -454,22 +475,34 @@
             object newPropertyValue,
             string propertyName)
         {
+            string newPropertyValueStr = newPropertyValue != null ? newPropertyValue.ToString() : null;
+            if (newPropertyValue != null && newPropertyValue is Geometry)
+            {
+                newPropertyValueStr = Formatter.Write((Geometry)newPropertyValue);
+            }
+
+            string oldPropertyValueStr = oldPropertyValue != null ? oldPropertyValue.ToString() : null;
+            if (oldPropertyValue != null && oldPropertyValue is Geometry)
+            {
+                oldPropertyValueStr = Formatter.Write((Geometry)oldPropertyValue);
+            }
+
             if (oldPropertyValue == null)
             {
-                return new FieldAuditData { Field = propertyName, OldValue = null, NewValue = newPropertyValue.ToString() };
+                return new FieldAuditData { Field = propertyName, OldValue = null, NewValue = newPropertyValueStr };
             }
 
             if (newPropertyValue == null)
             {
-                return new FieldAuditData { Field = propertyName, OldValue = oldPropertyValue.ToString(), NewValue = null };
+                return new FieldAuditData { Field = propertyName, OldValue = oldPropertyValueStr, NewValue = null };
             }
 
             bool unaltered = oldPropertyValue is IComparableType comparableType
                 ? comparableType.Compare(newPropertyValue) == 0
-                : oldPropertyValue.ToString() == newPropertyValue.ToString();
+                : oldPropertyValueStr == newPropertyValueStr;
             if (!unaltered)
             {
-                return new FieldAuditData { Field = propertyName, OldValue = oldPropertyValue.ToString(), NewValue = newPropertyValue.ToString() };
+                return new FieldAuditData { Field = propertyName, OldValue = oldPropertyValueStr, NewValue = newPropertyValueStr };
             }
 
             return null;

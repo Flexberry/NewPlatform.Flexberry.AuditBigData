@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>NewPlatform.Flexberry.AuditBigData</id>
-    <version>1.0.0-alpha02</version>
+    <version>1.0.0-alpha03</version>
     <title>Flexberry Audit</title>
     <authors>New Platform Ltd.</authors>
     <owners>New Platform Ltd.</owners>
@@ -13,12 +13,14 @@
     <description>Flexberry Audit package.</description>
     <releaseNotes>
       1. Base implementation.
+      2. Add geo types.
     </releaseNotes>
     <copyright>Copyright New Platform Ltd. 2020</copyright>
     <tags>Flexberry Audit</tags>
     <dependencies>
         <dependency id="NewPlatform.Flexberry.ORM" version="6.0.0-beta08" />
         <dependency id="Newtonsoft.Json" version="12.0.3" />
+        <dependency id="Microsoft.Spatial" version="7.7.2" />
     </dependencies>
   </metadata>
   <files>
