@@ -23,11 +23,15 @@
         /// </summary>
         private const string ErrorMessageOnFields = "Exception";
 
+        /// <summary>
+        /// Преобразовывает пространственные данные в формат хранения в БД.
+        /// </summary>
+        /// <returns> Преобразованные пространственные данные.</returns>
         private static WellKnownTextSqlFormatter Formatter
         {
             get
             {
-                return SpatialImplementation.CurrentImplementation.CreateWellKnownTextSqlFormatter(false /*allowOnlyTwoDimensions*/);
+                return SpatialImplementation.CurrentImplementation.CreateWellKnownTextSqlFormatter(false);
             }
         }
 
@@ -290,8 +294,9 @@
                             auditView.GetViewForMaster(propertyName));
                     }
                     else
-                    { // Вероятнее всего это собственное свойство.
-                        var curPropertyValueStr = curPropertyValue != null ? curPropertyValue.ToString() : null;
+                    {
+                        // Вероятнее всего это собственное свойство.
+                        string curPropertyValueStr = curPropertyValue != null ? curPropertyValue.ToString() : null;
                         if (curPropertyValue != null && curPropertyValue is Geometry)
                         {
                             curPropertyValueStr = Formatter.Write((Geometry)curPropertyValue);
@@ -470,13 +475,13 @@
             object newPropertyValue,
             string propertyName)
         {
-            var newPropertyValueStr = newPropertyValue != null ? newPropertyValue.ToString() : null;
+            string newPropertyValueStr = newPropertyValue != null ? newPropertyValue.ToString() : null;
             if (newPropertyValue != null && newPropertyValue is Geometry)
             {
                 newPropertyValueStr = Formatter.Write((Geometry)newPropertyValue);
             }
 
-            var oldPropertyValueStr = oldPropertyValue != null ? oldPropertyValue.ToString() : null;
+            string oldPropertyValueStr = oldPropertyValue != null ? oldPropertyValue.ToString() : null;
             if (oldPropertyValue != null && oldPropertyValue is Geometry)
             {
                 oldPropertyValueStr = Formatter.Write((Geometry)oldPropertyValue);
