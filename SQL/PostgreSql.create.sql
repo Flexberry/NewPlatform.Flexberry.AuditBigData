@@ -8,7 +8,7 @@ CREATE TABLE Audit (
 
  ObjectType VARCHAR(1024) NULL,
 
- ObjectPrimaryKey BYTEA NULL,
+ ObjectPrimaryKey VARCHAR(38) NULL,
 
  OperationTime TIMESTAMP(3) NOT NULL,
 
