@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="NewPlatform.Flexberry.Caching" Version="2.0.0-beta03" />
-    <PackageReference Include="NewPlatform.Flexberry.ClickHouse.Ado" Version="1.1.17-alpha02" />
+    <PackageReference Include="NewPlatform.Flexberry.ClickHouse.Ado" Version="1.3.1-alpha06" />
     <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0-beta13" />
     <PackageReference Include="NewPlatform.Flexberry.ORM.ClickHouseDataService" Version="6.0.0-alpha02" />
     <PackageReference Include="NewPlatform.Flexberry.ORM.MSSQLDataService" Version="6.0.0-beta11" />
