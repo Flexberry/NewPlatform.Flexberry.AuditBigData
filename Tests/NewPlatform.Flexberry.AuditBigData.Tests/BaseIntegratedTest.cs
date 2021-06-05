@@ -12,6 +12,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using NewPlatform.Flexberry.AuditBigData;
+    using NewPlatform.Flexberry.AuditBigData.Serialization;
     using NewPlatform.Flexberry.AuditBigData.Tests;
     using NewPlatform.Flexberry.ORM;
     using Npgsql;
@@ -502,7 +503,8 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             var auditDsSetting = new AuditDSSetting(dataService, $"{auditAppSetting.AppName}_{auditAppSetting.AuditConnectionStringName}");
             auditAppSetting.AuditDSSettings.Add(auditDsSetting);
 
-            AuditService.InitAuditService(auditAppSetting, new LegacyAuditManager(dataService, new LegacyAuditSerializer()), dataService.AuditService);
+            var legacyAuditManager = new LegacyAuditManager(dataService, new LegacyAuditConverter<JsonFieldAuditData>(), new JsonLegacyAuditSerializer());
+            AuditService.InitAuditService(auditAppSetting, legacyAuditManager, dataService.AuditService);
         }
     }
 }

@@ -1,19 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Flexberry Audit BigData Objects package.</Description>
-    <Title>Flexberry Audit BigData Objects</Title>
+    <Description>Flexberry Audit BigData Abstractions package.</Description>
+    <Title>Flexberry Audit BigData Abstractions</Title>
     <PackageTags>Flexberry Audit</PackageTags>
-    <Product>NewPlatform.Flexberry.AuditBigData.Objects</Product>
-    <PackageId>NewPlatform.Flexberry.AuditBigData.Objects</PackageId>
+    <Product>NewPlatform.Flexberry.AuditBigData.Abstractions</Product>
+    <PackageId>NewPlatform.Flexberry.AuditBigData.Abstractions</PackageId>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>NewPlatform.Flexberry.AuditBigData.Objects</RootNamespace>
-    <AssemblyName>NewPlatform.Flexberry.AuditBigData.Objects</AssemblyName>
+    <RootNamespace>NewPlatform.Flexberry.AuditBigData</RootNamespace>
+    <AssemblyName>NewPlatform.Flexberry.AuditBigData.Abstractions</AssemblyName>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>

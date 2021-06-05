@@ -19,8 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Open Source", "Open Source"
 		.travis.yml = .travis.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
 		CHANGELOG.md = CHANGELOG.md
-		LICENSE = LICENSE
-		NewPlatform.Flexberry.AuditBigData.nuspec = NewPlatform.Flexberry.AuditBigData.nuspec
+		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -36,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{0D3463A6-0EB
 		SQL\Oracle.create.sql = SQL\Oracle.create.sql
 		SQL\PostgreSql.create.sql = SQL\PostgreSql.create.sql
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Serialization.Json", "NewPlatform.Flexberry.AuditBigData.Serialization.Json\NewPlatform.Flexberry.AuditBigData.Serialization.Json.csproj", "{5C02D168-7855-46CD-B042-1B1D6FF29EDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewPlatform.Flexberry.AuditBigData.Abstractions", "NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj", "{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +62,14 @@ Global
 		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68AA3C8A-25F3-47A7-B732-3649105F0093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C02D168-7855-46CD-B042-1B1D6FF29EDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C02D168-7855-46CD-B042-1B1D6FF29EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C02D168-7855-46CD-B042-1B1D6FF29EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C02D168-7855-46CD-B042-1B1D6FF29EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

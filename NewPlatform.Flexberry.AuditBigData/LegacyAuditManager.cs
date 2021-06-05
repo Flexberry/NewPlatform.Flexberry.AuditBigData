@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+
     using ICSSoft.STORMNET;
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit;
@@ -14,28 +15,23 @@
     /// </summary>
     public class LegacyAuditManager : IAudit
     {
+        private readonly ILegacyAuditConverter auditConverter;
+
         private readonly ILegacyAuditSerializer auditSerializer;
+
         private readonly IDataService dataService;
 
         /// <summary>
         /// Initialize new <see cref="LegacyAuditManager"/> instance.
         /// </summary>
         /// <param name="dataService"><see cref="IDataService"/> instance to write <see cref="AuditRecord"/>.</param>
+        /// <param name="auditConverter"><see cref="ILegacyAuditSerializer"/> instance to convert fields audit data.</param>
         /// <param name="auditSerializer"><see cref="ILegacyAuditSerializer"/> instance to serialize fields audit data.</param>
-        public LegacyAuditManager(IDataService dataService, ILegacyAuditSerializer auditSerializer)
+        public LegacyAuditManager(IDataService dataService, ILegacyAuditConverter auditConverter, ILegacyAuditSerializer auditSerializer)
         {
-            if (dataService == null)
-            {
-                throw new ArgumentNullException(nameof(dataService));
-            }
-
-            if (auditSerializer == null)
-            {
-                throw new ArgumentNullException(nameof(auditSerializer));
-            }
-
-            this.dataService = dataService;
-            this.auditSerializer = auditSerializer;
+            this.dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            this.auditConverter = auditConverter ?? throw new ArgumentNullException(nameof(auditConverter));
+            this.auditSerializer = auditSerializer ?? throw new ArgumentNullException(nameof(auditSerializer));
         }
 
         /// <summary>
@@ -64,7 +60,8 @@
             {
                 try
                 {
-                    string serializedFields = auditSerializer.Serialize(auditAdditionalInfo);
+                    IEnumerable<IFieldAuditData> fieldAuditDataList = auditConverter.Convert(auditAdditionalInfo);
+                    string serializedFields = auditSerializer.Serialize(fieldAuditDataList);
 
                     AuditRecord auditRecord = CreateRatifyingAuditRecord(
                         ratificationAuditParameters.CurrentTime,
@@ -108,9 +105,10 @@
             try
             {
                 string objectType = commonAuditParameters.OperatedObject.GetType().AssemblyQualifiedName;
-                AuditOperationType auditOperationType = LegacyAuditConverter.TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
+                AuditOperationType auditOperationType = LegacyAuditConverterHelper.TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
                 string operationType = EnumCaption.GetCaptionFor(auditOperationType);
-                string serializedFields = auditSerializer.Serialize(commonAuditParameters);
+                IEnumerable<IFieldAuditData> fieldAuditDataList = auditConverter.Convert(commonAuditParameters);
+                string serializedFields = auditSerializer.Serialize(fieldAuditDataList);
                 string operatedObjectKeyAsString = commonAuditParameters.OperatedObject.__PrimaryKey.ToString();
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
@@ -155,8 +153,9 @@
 
             try
             {
-                string operationType = LegacyAuditConverter.OperationType2BigDataOperationType(checkedCustomAuditParameters.CustomOperation);
-                string serializedFields = auditSerializer.Serialize(checkedCustomAuditParameters.CustomAuditFieldList);
+                string operationType = LegacyAuditConverterHelper.OperationType2BigDataOperationType(checkedCustomAuditParameters.CustomOperation);
+                IEnumerable<IFieldAuditData> fieldAuditDataList = auditConverter.Convert(checkedCustomAuditParameters.CustomAuditFieldList);
+                string serializedFields = auditSerializer.Serialize(fieldAuditDataList);
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
                     checkedCustomAuditParameters.UserName,
@@ -237,7 +236,7 @@
             string serializedFields,
             object headAuditEntityPrimaryKey)
         {
-            ExecutionStatus executionStatus = LegacyAuditConverter.ExecutionVariant2ExecutionStatus(executionVariant);
+            ExecutionStatus executionStatus = LegacyAuditConverterHelper.ExecutionVariant2ExecutionStatus(executionVariant);
 
             return CreateRatifyingAuditRecord(
                 operationTime,
@@ -319,7 +318,7 @@
             string serializedFields,
             Guid? auditEntityGuid)
         {
-            ExecutionStatus executionStatus = LegacyAuditConverter.ExecutionVariant2ExecutionStatus(executionVariant);
+            ExecutionStatus executionStatus = LegacyAuditConverterHelper.ExecutionVariant2ExecutionStatus(executionVariant);
 
             return CreatePrimaryAuditRecord(
                 userName,

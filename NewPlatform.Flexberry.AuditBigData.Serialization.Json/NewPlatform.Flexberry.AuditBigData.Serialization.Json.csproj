@@ -1,31 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Flexberry Audit BigData package.</Description>
-    <Title>Flexberry Audit BigData</Title>
+    <Description>Flexberry Audit BigData Serialization package.</Description>
+    <Title>Flexberry Audit BigData Serialization</Title>
     <PackageTags>Flexberry Audit</PackageTags>
-    <Product>NewPlatform.Flexberry.AuditBigData</Product>
-    <PackageId>NewPlatform.Flexberry.AuditBigData</PackageId>
+    <Product>NewPlatform.Flexberry.AuditBigData.Serialization.Json</Product>
+    <PackageId>NewPlatform.Flexberry.AuditBigData.Serialization.Json</PackageId>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>NewPlatform.Flexberry.AuditBigData</RootNamespace>
-    <AssemblyName>NewPlatform.Flexberry.AuditBigData</AssemblyName>
+    <RootNamespace>NewPlatform.Flexberry.AuditBigData.Serialization</RootNamespace>
+    <AssemblyName>NewPlatform.Flexberry.AuditBigData.Serialization.Json</AssemblyName>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj" />
-    <ProjectReference Include="..\Objects\NewPlatform.Flexberry.AuditBigData.Objects.csproj" />
   </ItemGroup>
 
 </Project>

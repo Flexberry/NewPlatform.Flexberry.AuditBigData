@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <IsPackable >false</IsPackable>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>latest</LangVersion>
     <RootNamespace>NewPlatform.Flexberry.AuditBigData.Tests</RootNamespace>
     <AssemblyName>NewPlatform.Flexberry.AuditBigData.Tests</AssemblyName>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>NewPlatform.Flexberry.AuditBigData.Tests.snk</AssemblyOriginatorKeyFile>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <CodeAnalysisRuleSet>..\..\Flexberry.ruleset</CodeAnalysisRuleSet>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
@@ -24,16 +21,7 @@
     <PackageReference Include="NewPlatform.Flexberry.ORM.OracleDataService" Version="6.0.0" />
     <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0" />
     <PackageReference Include="Moq" Version="4.15.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NewPlatform.Flexberry.Security" Version="3.0.0-beta03" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+    <PackageReference Include="NewPlatform.Flexberry.Security" Version="3.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -47,8 +35,8 @@
 
   <ItemGroup>
     <None Remove="SqlScripts\**" />
-    <None Remove="StyleCop.Cache" />
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -63,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NewPlatform.Flexberry.AuditBigData.Serialization.Json\NewPlatform.Flexberry.AuditBigData.Serialization.Json.csproj" />
     <ProjectReference Include="..\..\NewPlatform.Flexberry.AuditBigData\NewPlatform.Flexberry.AuditBigData.csproj" />
     <ProjectReference Include="..\..\Objects\NewPlatform.Flexberry.AuditBigData.Objects.csproj" />
     <ProjectReference Include="..\Objects\NewPlatform.Flexberry.AuditBigData.Tests.Objects.csproj" />

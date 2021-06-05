@@ -8,21 +8,21 @@
         /// <summary>
         /// Field value getter.
         /// </summary>
-        public string Field { get; }
+        public string Field { get; set; }
 
         /// <summary>
         /// MainChange value getter.
         /// </summary>
-        public IFieldAuditData MainChange { get; }
+        public IFieldAuditData MainChange { get; set; }
 
         /// <summary>
         /// NewValue value getter.
         /// </summary>
-        public string NewValue { get; }
+        public string NewValue { get; set; }
 
         /// <summary>
         /// OldValue value getter.
         /// </summary>
-        public string OldValue { get; }
+        public string OldValue { get; set; }
     }
 }
