@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>NewPlatform.Flexberry.AuditBigData</id>
-    <version>1.0.0-alpha03</version>
+    <version>1.0.0-beta01</version>
     <title>Flexberry Audit</title>
     <authors>New Platform Ltd.</authors>
     <owners>New Platform Ltd.</owners>
@@ -15,12 +15,12 @@
       1. Base implementation.
       2. Add geo types.
     </releaseNotes>
-    <copyright>Copyright New Platform Ltd. 2020</copyright>
+    <copyright>Copyright New Platform Ltd. 2021</copyright>
     <tags>Flexberry Audit</tags>
     <dependencies>
-        <dependency id="NewPlatform.Flexberry.ORM" version="6.0.0-beta08" />
-        <dependency id="Newtonsoft.Json" version="12.0.3" />
-        <dependency id="Microsoft.Spatial" version="7.7.2" />
+      <dependency id="NewPlatform.Flexberry.ORM" version="6.0.0" />
+      <dependency id="Newtonsoft.Json" version="12.0.3" />
+      <dependency id="Microsoft.Spatial" version="7.7.2" />
     </dependencies>
   </metadata>
   <files>
@@ -28,10 +28,12 @@
     <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\netstandard2.0\NewPlatform.Flexberry.AuditBigData.xml" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.xml" />
     <file src="Objects\bin\$configuration$\netstandard2.0\NewPlatform.Flexberry.AuditBigData.Objects.dll" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.Objects.dll" />
     <file src="Objects\bin\$configuration$\netstandard2.0\NewPlatform.Flexberry.AuditBigData.Objects.xml" target="lib\netstandard2.0\NewPlatform.Flexberry.AuditBigData.Objects.xml" />
+
     <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net45\NewPlatform.Flexberry.AuditBigData.dll" target="lib\net45\NewPlatform.Flexberry.AuditBigData.dll" />
     <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net45\NewPlatform.Flexberry.AuditBigData.xml" target="lib\net45\NewPlatform.Flexberry.AuditBigData.xml" />
     <file src="Objects\bin\$configuration$\net45\NewPlatform.Flexberry.AuditBigData.Objects.dll" target="lib\net45\NewPlatform.Flexberry.AuditBigData.Objects.dll" />
     <file src="Objects\bin\$configuration$\net45\NewPlatform.Flexberry.AuditBigData.Objects.xml" target="lib\net45\NewPlatform.Flexberry.AuditBigData.Objects.xml" />
+
     <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net461\NewPlatform.Flexberry.AuditBigData.dll" target="lib\net461\NewPlatform.Flexberry.AuditBigData.dll" />
     <file src="NewPlatform.Flexberry.AuditBigData\bin\$configuration$\net461\NewPlatform.Flexberry.AuditBigData.xml" target="lib\net461\NewPlatform.Flexberry.AuditBigData.xml" />
     <file src="Objects\bin\$configuration$\net461\NewPlatform.Flexberry.AuditBigData.Objects.dll" target="lib\net461\NewPlatform.Flexberry.AuditBigData.Objects.dll" />
