@@ -1,17 +1,17 @@
 CREATE TABLE Audit
 (
     "primaryKey" UUID,
-    "UserName" String,
-    "UserLogin" String,
+    "UserName" Nullable(String),
+    "UserLogin" Nullable(String),
     "OperationId" Nullable(UUID),
     "OperationTags" String,
-    "ObjectType" String,
-    "ObjectPrimaryKey" String,
+    "ObjectType" Nullable(String),
+    "ObjectPrimaryKey" Nullable(String),
     "OperationTime" DateTime,
     "OperationType" String,
     "ExecutionStatus" String,
-    "Source" String,
-    "SerializedFields" String,
+    "Source" Nullable(String),
+    "SerializedFields" Nullable(String),
     "HeadAuditEntity" Nullable(UUID)
 )
 ENGINE = MergeTree()

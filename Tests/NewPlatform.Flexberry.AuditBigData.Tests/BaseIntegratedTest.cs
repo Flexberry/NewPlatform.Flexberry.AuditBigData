@@ -263,8 +263,22 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                 using (var connection = new ClickHouseConnection(settings))
                 {
                     connection.Open();
-                    using (var cmd = new ClickHouseCommand(connection, ClickHouseScript))
-                        cmd.ExecuteNonQuery();
+
+                    string[] createTableCommands = ClickHouseScript.Split(';');
+
+                    foreach (string createTableCommand in createTableCommands)
+                    {
+                        if (string.IsNullOrWhiteSpace(createTableCommand))
+                        {
+                            continue;
+                        }
+
+                        using (var cmd = new ClickHouseCommand(connection, createTableCommand))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
                     string connectionString = $"{ConnectionStringClickHouse};Database={_databaseName}";
                     ClickHouseDataService dataService = CreateClickHouseDataService(connectionString);
                     _clickHousedataServices = dataService;
