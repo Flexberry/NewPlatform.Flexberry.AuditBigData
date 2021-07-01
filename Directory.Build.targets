@@ -12,11 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<AdditionalFiles Include="$(MSBuildThisFileDirectory)\Flexberry.ruleset" />-->
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)\icon.png" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)\key.snk" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)\LICENSE.md" />
-    <!--<AdditionalFiles Include="$(MSBuildThisFileDirectory)\stylecop.json" />-->
   </ItemGroup>
 
   <ItemGroup>

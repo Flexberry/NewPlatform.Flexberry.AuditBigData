@@ -10,8 +10,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
-    <Configurations>Debug;Release</Configurations>
-    <LangVersion>latest</LangVersion>
     <RootNamespace>NewPlatform.Flexberry.AuditBigData</RootNamespace>
     <AssemblyName>NewPlatform.Flexberry.AuditBigData</AssemblyName>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>

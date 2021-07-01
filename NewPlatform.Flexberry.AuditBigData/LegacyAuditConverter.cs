@@ -303,11 +303,7 @@
                     else
                     {
                         // Вероятнее всего это собственное свойство.
-                        string curPropertyValueStr = curPropertyValue?.ToString();
-                        if (curPropertyValue is Geometry geometry)
-                        {
-                            curPropertyValueStr = Formatter.Write(geometry);
-                        }
+                        string curPropertyValueStr = ConvertPropertyValueToString(curPropertyValue);
 
                         IFieldAuditData fieldAuditData = new T
                         {
@@ -487,17 +483,9 @@
             object newPropertyValue,
             string propertyName)
         {
-            string newPropertyValueStr = newPropertyValue?.ToString();
-            if (newPropertyValue is Geometry newGeometry)
-            {
-                newPropertyValueStr = Formatter.Write(newGeometry);
-            }
+            string newPropertyValueStr = ConvertPropertyValueToString(newPropertyValue);
 
-            string oldPropertyValueStr = oldPropertyValue?.ToString();
-            if (oldPropertyValue is Geometry oldGeometry)
-            {
-                oldPropertyValueStr = Formatter.Write(oldGeometry);
-            }
+            string oldPropertyValueStr = ConvertPropertyValueToString(oldPropertyValue);
 
             if (oldPropertyValue == null)
             {
@@ -638,6 +626,26 @@
                 };
                 fieldAuditDataList.Add(auditFieldWithPriKey);
             }
+        }
+
+        /// <summary>
+        /// Преобразование значение свойства к строке.
+        /// </summary>
+        /// <param name="propValue">Значение свойства.</param>
+        /// <returns>Преобразованное значение.</returns>
+        private static string ConvertPropertyValueToString(object propValue)
+        {
+            string propValueStr;
+            if (propValue is Geometry geometry)
+            {
+                propValueStr = Formatter.Write(geometry);
+            }
+            else
+            {
+                propValueStr = propValue?.ToString();
+            }
+
+            return propValueStr;
         }
     }
 }

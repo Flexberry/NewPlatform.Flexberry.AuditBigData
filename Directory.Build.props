@@ -20,6 +20,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <Configurations>Debug;Release</Configurations>
+    <LangVersion>latest</LangVersion>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\key.snk</AssemblyOriginatorKeyFile>

@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <IsPackable >false</IsPackable>
+    <IsPackable>false</IsPackable>
     <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
-    <Configurations>Debug;Release</Configurations>
-    <LangVersion>latest</LangVersion>
     <RootNamespace>NewPlatform.Flexberry.AuditBigData.Tests.Objects</RootNamespace>
     <AssemblyName>NewPlatform.Flexberry.AuditBigData.Tests.Objects</AssemblyName>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>

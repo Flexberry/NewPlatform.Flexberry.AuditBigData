@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Flexberry Audit BigData Serialization package.</Description>
@@ -10,8 +10,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
-    <Configurations>Debug;Release</Configurations>
-    <LangVersion>latest</LangVersion>
     <RootNamespace>NewPlatform.Flexberry.AuditBigData.Serialization</RootNamespace>
     <AssemblyName>NewPlatform.Flexberry.AuditBigData.Serialization.Json</AssemblyName>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
