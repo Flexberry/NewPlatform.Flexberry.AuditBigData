@@ -40,6 +40,24 @@ namespace NewPlatform.Flexberry.AuditBigData
             "Source",
             "SerializedFields",
             "HeadAuditEntity"})]
+    [View("AuditRecordE", new string[] {
+            "ObjectPrimaryKey",
+            "ObjectType",
+            "OperationTime",
+            "OperationType",
+            "ExecutionStatus",
+            "Source",
+            "UserName",
+            "UserLogin",
+            "SerializedFields"})]
+    [View("AuditRecordL", new string[] {
+            "ObjectPrimaryKey",
+            "ObjectType",
+            "OperationTime",
+            "OperationType",
+            "Source",
+            "UserName",
+            "UserLogin"})]
     public class AuditRecord : ICSSoft.STORMNET.DataObject
     {
         
@@ -402,6 +420,28 @@ namespace NewPlatform.Flexberry.AuditBigData
                 get
                 {
                     return ICSSoft.STORMNET.Information.GetView("AllFields", typeof(NewPlatform.Flexberry.AuditBigData.AuditRecord));
+                }
+            }
+
+            /// <summary>
+            /// "AuditRecordE" view.
+            /// </summary>
+            public static ICSSoft.STORMNET.View AuditRecordE
+            {
+                get
+                {
+                    return ICSSoft.STORMNET.Information.GetView("AuditRecordE", typeof(NewPlatform.Flexberry.AuditBigData.AuditRecord));
+                }
+            }
+
+            /// <summary>
+            /// "AuditRecordL" view.
+            /// </summary>
+            public static ICSSoft.STORMNET.View AuditRecordL
+            {
+                get
+                {
+                    return ICSSoft.STORMNET.Information.GetView("AuditRecordL", typeof(NewPlatform.Flexberry.AuditBigData.AuditRecord));
                 }
             }
         }
