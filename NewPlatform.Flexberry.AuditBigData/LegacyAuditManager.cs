@@ -111,12 +111,13 @@
                 AuditOperationType auditOperationType = LegacyAuditConverter.TypeOfAuditOperation2AuditOperationType(commonAuditParameters.TypeOfAuditOperation);
                 string operationType = EnumCaption.GetCaptionFor(auditOperationType);
                 string serializedFields = auditSerializer.Serialize(commonAuditParameters);
+                string operatedObjectKeyAsString = commonAuditParameters.OperatedObject.__PrimaryKey.ToString();
 
                 AuditRecord auditRecord = CreatePrimaryAuditRecord(
                     commonAuditParameters.UserName,
                     commonAuditParameters.FullUserLogin,
                     objectType,
-                    commonAuditParameters.OperatedObject.__PrimaryKey,
+                    operatedObjectKeyAsString,
                     commonAuditParameters.CurrentTime,
                     operationType,
                     commonAuditParameters.ExecutionResult,
