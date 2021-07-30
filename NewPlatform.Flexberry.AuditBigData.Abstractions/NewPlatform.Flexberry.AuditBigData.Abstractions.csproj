@@ -21,4 +21,8 @@
     <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
