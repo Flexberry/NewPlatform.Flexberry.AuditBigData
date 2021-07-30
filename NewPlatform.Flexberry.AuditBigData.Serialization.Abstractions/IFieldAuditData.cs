@@ -1,7 +1,7 @@
 ﻿namespace NewPlatform.Flexberry.AuditBigData
 {
     /// <summary>
-    /// Интерфейс структуры хранения данных аудита свойства объекта <see cref="ICSSoft.STORMNET.DataObject"/>.
+    /// Интерфейс структуры хранения данных аудита свойств объекта.
     /// </summary>
     public interface IFieldAuditData
     {

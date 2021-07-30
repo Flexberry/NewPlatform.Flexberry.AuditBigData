@@ -38,7 +38,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{0D3463A6-0EB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Serialization.Json", "NewPlatform.Flexberry.AuditBigData.Serialization.Json\NewPlatform.Flexberry.AuditBigData.Serialization.Json.csproj", "{5C02D168-7855-46CD-B042-1B1D6FF29EDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewPlatform.Flexberry.AuditBigData.Abstractions", "NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj", "{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Abstractions", "NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj", "{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions", "NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj", "{3B02F028-013D-4835-B607-74C8C053DA1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +72,10 @@ Global
 		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B02F028-013D-4835-B607-74C8C053DA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B02F028-013D-4835-B607-74C8C053DA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B02F028-013D-4835-B607-74C8C053DA1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B02F028-013D-4835-B607-74C8C053DA1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

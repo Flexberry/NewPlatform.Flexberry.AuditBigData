@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj" />
+    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
