@@ -2,11 +2,15 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+
     using ICSSoft.STORMNET.Business.Audit.Objects;
     using ICSSoft.STORMNET.FunctionalLanguage;
     using ICSSoft.STORMNET.Windows.Forms;
+
     using NewPlatform.Flexberry.Audit.Tests;
     using NewPlatform.Flexberry.AuditBigData;
+    using NewPlatform.Flexberry.AuditBigData.Serialization;
+
     using Xunit;
 
     /// <summary>
@@ -52,7 +56,7 @@
                 DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
                 DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
                 string operationType = AuditOperationType.Insert.ToString();
-                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().First(x => x.OperationType == operationType);
 
                 // Assert.
                 Assert.Single(primaryAuditObjects);
@@ -66,7 +70,7 @@
                     .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
 
                 // Вычитка полей аудита.
-                IEnumerable<IFieldAuditData> fieldAuditDataItems = new LegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
+                IEnumerable<IFieldAuditData> fieldAuditDataItems = new JsonLegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
                 Assert.Equal(9, fieldAuditDataItems.Count());
 
                 int countOfClass1Fields = 0;
@@ -133,7 +137,7 @@
                 DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
                 DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
                 string operationType = AuditOperationType.Update.ToString();
-                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().First(x => x.OperationType == operationType);
 
                 // Assert.
                 Assert.Equal(2, primaryAuditObjects.Length);
@@ -147,7 +151,7 @@
                     .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
 
                 // Вычитка полей аудита.
-                IEnumerable<IFieldAuditData> fieldAuditDataItems = new LegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
+                IEnumerable<IFieldAuditData> fieldAuditDataItems = new JsonLegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
                 Assert.Equal(4, fieldAuditDataItems.Count());
 
                 int countOfClass1Fields = 0;
@@ -207,7 +211,7 @@
                 DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
                 DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
                 string operationType = AuditOperationType.Update.ToString();
-                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().First(x => x.OperationType == operationType);
 
                 // Assert.
                 Assert.Equal(2, primaryAuditObjects.Length);
@@ -221,7 +225,7 @@
                     .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
 
                 // Вычитка полей аудита.
-                IEnumerable<IFieldAuditData> fieldAuditDataItems = new LegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
+                IEnumerable<IFieldAuditData> fieldAuditDataItems = new JsonLegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
                 Assert.Equal(4, fieldAuditDataItems.Count());
 
                 int countOfClass1Fields = 0;
@@ -273,7 +277,7 @@
                 DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
                 DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
                 string operationType = AuditOperationType.Insert.ToString();
-                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().First(x => x.OperationType == operationType);
 
                 // Assert.
                 Assert.Single(primaryAuditObjects);
@@ -287,7 +291,7 @@
                     .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
 
                 // Вычитка полей аудита.
-                IEnumerable<IFieldAuditData> fieldAuditDataItems = new LegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
+                IEnumerable<IFieldAuditData> fieldAuditDataItems = new JsonLegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
                 Assert.Equal(9, fieldAuditDataItems.Count());
 
                 string text = $"Class1({AuditConstants.FieldNamePrimaryKey})";
@@ -323,7 +327,7 @@
                 DataObject[] primaryAuditObjects = dataService.LoadObjects(lcs);
                 DataObject[] ratifyingAuditObjects = GetRatifyingAuditObjects(dataService, primaryAuditObjects);
                 string operationType = AuditOperationType.Insert.ToString();
-                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().FirstOrDefault(x => x.OperationType == operationType);
+                AuditRecord primaryAuditRecord = primaryAuditObjects.Cast<AuditRecord>().First(x => x.OperationType == operationType);
 
                 // Assert.
                 Assert.Single(primaryAuditObjects);
@@ -337,7 +341,7 @@
                     .Where(x => x.HeadAuditEntity.__PrimaryKey.Equals(primaryAuditRecord.__PrimaryKey)));
 
                 // Вычитка полей аудита.
-                IEnumerable<IFieldAuditData> fieldAuditDataItems = new LegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
+                IEnumerable<IFieldAuditData> fieldAuditDataItems = new JsonLegacyAuditSerializer().Deserialize(primaryAuditRecord.SerializedFields);
                 Assert.Equal(8, fieldAuditDataItems.Count());
 
                 int countOfClass1AtAuditFields = fieldAuditDataItems.Count(x => x.Field.IndexOf("Class1") != -1);

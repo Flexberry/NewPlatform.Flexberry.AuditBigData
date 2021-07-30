@@ -1,17 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Flexberry Audit BigData package.</Description>
-    <Title>Flexberry Audit BigData</Title>
+    <Description>Flexberry Audit BigData Abstractions package.</Description>
+    <Title>Flexberry Audit BigData Abstractions</Title>
     <PackageTags>Flexberry Audit</PackageTags>
-    <Product>NewPlatform.Flexberry.AuditBigData</Product>
-    <PackageId>NewPlatform.Flexberry.AuditBigData</PackageId>
+    <Product>NewPlatform.Flexberry.AuditBigData.Abstractions</Product>
+    <PackageId>NewPlatform.Flexberry.AuditBigData.Abstractions</PackageId>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
     <RootNamespace>NewPlatform.Flexberry.AuditBigData</RootNamespace>
-    <AssemblyName>NewPlatform.Flexberry.AuditBigData</AssemblyName>
+    <AssemblyName>NewPlatform.Flexberry.AuditBigData.Abstractions</AssemblyName>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
@@ -22,8 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj" />
-    <ProjectReference Include="..\Objects\NewPlatform.Flexberry.AuditBigData.Objects.csproj" />
+    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
