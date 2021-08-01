@@ -1,11 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+ 
   <PropertyGroup>
     <Description>Flexberry Audit BigData Serialization package.</Description>
     <Title>Flexberry Audit BigData Serialization</Title>
     <PackageTags>Flexberry Audit</PackageTags>
     <Product>NewPlatform.Flexberry.AuditBigData.Serialization.Json</Product>
     <PackageId>NewPlatform.Flexberry.AuditBigData.Serialization.Json</PackageId>
+	<Authors>New Platform Ltd.</Authors>
+    <Copyright>Copyright 2017-2021 © New Platform Ltd.</Copyright>
+    <Company>New Platform Ltd.</Company>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>beta01</VersionSuffix>
+    <PackageProjectUrl>https://flexberry.net</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/Flexberry/NewPlatform.Flexberry.AuditBigData</RepositoryUrl>
+    <PackageReleaseNotes>See https://github.com/Flexberry/NewPlatform.Flexberry.AuditBigData/blob/master/CHANGELOG.md </PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -15,14 +27,40 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
+	<Configurations>Debug;Release</Configurations>
+    <LangVersion>latest</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\key.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\Flexberry.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)\icon.png" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)\key.snk" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)\LICENSE.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj" />
+    <None Include="$(MSBuildThisFileDirectory)\icon.png" Pack="true" PackagePath="" />
+    <None Include="$(MSBuildThisFileDirectory)\LICENSE.md" Pack="true" PackagePath="" />
+    <None Remove="StyleCop.Cache" />
   </ItemGroup>
 
 </Project>
