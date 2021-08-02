@@ -10,7 +10,7 @@
     <Copyright>Copyright 2017-2021 © New Platform Ltd.</Copyright>
     <Company>New Platform Ltd.</Company>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>beta01</VersionSuffix>
+    <VersionSuffix>rc01</VersionSuffix>
     <PackageProjectUrl>https://flexberry.net</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>

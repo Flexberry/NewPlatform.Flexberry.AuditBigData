@@ -8,7 +8,7 @@
     <Company>New Platform Ltd.</Company>	
     <PackageTags>Flexberry Audit</PackageTags>
 	<VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>beta01</VersionSuffix>
+    <VersionSuffix>rc01</VersionSuffix>
 	<Product>NewPlatform.Flexberry.AuditBigData</Product>
     <PackageId>NewPlatform.Flexberry.AuditBigData</PackageId>
     <VersionPrefix>1.0.0</VersionPrefix>
