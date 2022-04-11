@@ -18,7 +18,7 @@ CREATE TABLE Audit (
 
  Source VARCHAR(255) NULL,
 
- SerializedFields TEXT NULL,
+ SerializedFields JSONB NULL,
 
  HeadAuditEntity UUID NULL,
 
