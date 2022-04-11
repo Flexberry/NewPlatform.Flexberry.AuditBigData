@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{0D3463A6-0EB
 		SQL\MSSql.create.sql = SQL\MSSql.create.sql
 		SQL\Oracle.create.sql = SQL\Oracle.create.sql
 		SQL\PostgreSql.create.sql = SQL\PostgreSql.create.sql
+		SQL\PostgreSql.update.jsonb.sql = SQL\PostgreSql.update.jsonb.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Serialization.Json", "NewPlatform.Flexberry.AuditBigData.Serialization.Json\NewPlatform.Flexberry.AuditBigData.Serialization.Json.csproj", "{5C02D168-7855-46CD-B042-1B1D6FF29EDA}"
