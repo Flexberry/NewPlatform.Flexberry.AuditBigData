@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData", "NewPlatform.Flexberry.AuditBigData\NewPlatform.Flexberry.AuditBigData.csproj", "{64F896B4-C88D-4F20-BFD1-9511A744685B}"
 EndProject
@@ -34,7 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{0D3463A6-0EB
 		SQL\MSSql.create.sql = SQL\MSSql.create.sql
 		SQL\Oracle.create.sql = SQL\Oracle.create.sql
 		SQL\PostgreSql.create.sql = SQL\PostgreSql.create.sql
-		SQL\PostgreSql.update.jsonb.sql = SQL\PostgreSql.update.jsonb.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Serialization.Json", "NewPlatform.Flexberry.AuditBigData.Serialization.Json\NewPlatform.Flexberry.AuditBigData.Serialization.Json.csproj", "{5C02D168-7855-46CD-B042-1B1D6FF29EDA}"
@@ -42,6 +41,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Abstractions", "NewPlatform.Flexberry.AuditBigData.Abstractions\NewPlatform.Flexberry.AuditBigData.Abstractions.csproj", "{FEC7DCFB-6C50-433D-84E4-07CCCA7BB828}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions", "NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions\NewPlatform.Flexberry.AuditBigData.Serialization.Abstractions.csproj", "{3B02F028-013D-4835-B607-74C8C053DA1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{55CC52C2-05CC-4D68-B613-8D8FCC38E002}"
+	ProjectSection(SolutionItems) = preProject
+		SQL\Tools\PostgreSql.update.texttojsonb.sql = SQL\Tools\PostgreSql.update.texttojsonb.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +88,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C29A0FA8-ABF7-45B7-B6E4-57A51F439FCA} = {3D619267-3BE8-42D5-8593-224430B9F2EA}
 		{68AA3C8A-25F3-47A7-B732-3649105F0093} = {3D619267-3BE8-42D5-8593-224430B9F2EA}
+		{55CC52C2-05CC-4D68-B613-8D8FCC38E002} = {0D3463A6-0EB9-4B3A-BC10-B448FE864375}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {019E4A2E-E281-46DD-B2AD-95443DF23A35}
