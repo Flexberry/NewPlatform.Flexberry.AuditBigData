@@ -28,7 +28,7 @@ namespace NewPlatform.Flexberry.AuditBigData
     // *** End programmer edit section *** (AuditRecord CustomAttributes)
     [ClassStorage("Audit")]
     [AutoAltered()]
-    [AccessType(ICSSoft.STORMNET.AccessType.none)]
+    [AccessType(ICSSoft.STORMNET.AccessType.@this)]
     [View("AllFields", new string[] {
             "UserName",
             "UserLogin",
