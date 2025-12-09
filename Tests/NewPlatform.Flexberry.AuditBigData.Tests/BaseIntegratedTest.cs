@@ -156,7 +156,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                     InitAuditService(dataService);
                     string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
-                    if (connectionStringsSection.ConnectionStrings[name] != null)
+                    if (connectionStringsSection.ConnectionStrings[name] == null)
                     {
                         connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
                     }
@@ -188,7 +188,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     _dataServices.Add(dataService);
                     InitAuditService(dataService);
                     string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
-                    if (connectionStringsSection.ConnectionStrings[name] != null)
+                    if (connectionStringsSection.ConnectionStrings[name] == null)
                     {
                         connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
                     }
@@ -251,7 +251,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                         _dataServices.Add(dataService);
                         InitAuditService(dataService);
                         string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
-                        if (connectionStringsSection.ConnectionStrings[name] != null)
+                        if (connectionStringsSection.ConnectionStrings[name] == null)
                         {
                             connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
                         }
@@ -307,7 +307,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
 
                     string appName = "_audit" + dataService.AuditService.AppSetting.AppName;
                     string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
-                    if (connectionStringsSection.ConnectionStrings[name] != null)
+                    if (connectionStringsSection.ConnectionStrings[name] == null)
                     {
                         connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connectionString));
                     }

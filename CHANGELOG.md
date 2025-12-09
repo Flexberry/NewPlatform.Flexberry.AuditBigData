@@ -5,11 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-* Testing under .NET10.
+* Testing under .NET 10.
 
 ### Fixed
 
 ### Changed
-* Updated `NewPlatform.Flexberry.ORM` up to `8.0.0-beta06"`.
+* Updated `NewPlatform.Flexberry.ORM` up to `8.0.0-beta06`.
 
 
