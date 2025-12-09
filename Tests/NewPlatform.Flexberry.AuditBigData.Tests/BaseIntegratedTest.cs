@@ -5,18 +5,26 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Data.SqlClient;
     using System.Linq;
     using System.Threading;
     using ClickHouse.Ado;
     using ICSSoft.STORMNET.Business;
     using ICSSoft.STORMNET.Business.Audit.Objects;
+    using ICSSoft.STORMNET.Security;
     using NewPlatform.Flexberry.AuditBigData;
     using NewPlatform.Flexberry.AuditBigData.Serialization;
     using NewPlatform.Flexberry.AuditBigData.Tests;
     using NewPlatform.Flexberry.ORM;
     using Npgsql;
     using Oracle.ManagedDataAccess.Client;
+
+#if NET10_0_OR_GREATER
+    using SqlCommand = Microsoft.Data.SqlClient.SqlCommand;
+    using SqlConnection = Microsoft.Data.SqlClient.SqlConnection;
+#else
+    using SqlCommand = System.Data.SqlClient.SqlCommand;
+    using SqlConnection = System.Data.SqlClient.SqlConnection;
+#endif
 
     public abstract class BaseIntegratedTest : IDisposable
     {
@@ -147,8 +155,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     _dataServices.Add(dataService);
 
                     InitAuditService(dataService);
-
-                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connStr));
+                    string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                    if (connectionStringsSection.ConnectionStrings[name] == null)
+                    {
+                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
+                    }
                 }
             }
 
@@ -176,7 +187,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     MSSQLDataService dataService = CreateMssqlDataService(connStr);
                     _dataServices.Add(dataService);
                     InitAuditService(dataService);
-                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connStr));
+                    string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                    if (connectionStringsSection.ConnectionStrings[name] == null)
+                    {
+                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
+                    }
                 }
             }
 
@@ -235,7 +250,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                         OracleDataService dataService = CreateOracleDataService(connStr);
                         _dataServices.Add(dataService);
                         InitAuditService(dataService);
-                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connStr));
+                        string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                        if (connectionStringsSection.ConnectionStrings[name] == null)
+                        {
+                            connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
+                        }
                     }
                 }
             }
@@ -287,7 +306,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     InitAuditService(dataService);
 
                     string appName = "_audit" + dataService.AuditService.AppSetting.AppName;
-                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{appName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connectionString));
+                    string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                    if (connectionStringsSection.ConnectionStrings[name] == null)
+                    {
+                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connectionString));
+                    }
                 }
             }
 
@@ -302,7 +325,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <returns>The <see cref="MSSQLDataService"/> instance.</returns>
         protected virtual MSSQLDataService CreateMssqlDataService(string connectionString)
         {
-            return new MSSQLDataService { CustomizationString = connectionString };
+            return new MSSQLDataService(new EmptySecurityManager(), new EmptyAuditService(), new EmptyBusinessServerProvider()) { CustomizationString = connectionString };
         }
 
         /// <summary>
@@ -312,7 +335,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <returns>The <see cref="PostgresDataService"/> instance.</returns>
         protected virtual PostgresDataService CreatePostgresDataService(string connectionString)
         {
-            return new PostgresDataService { CustomizationString = connectionString };
+            return new PostgresDataService(new EmptySecurityManager(), new EmptyAuditService(), new EmptyBusinessServerProvider()) { CustomizationString = connectionString };
         }
 
         /// <summary>
@@ -322,7 +345,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <returns>The <see cref="OracleDataService"/> instance.</returns>
         protected virtual OracleDataService CreateOracleDataService(string connectionString)
         {
-            return new OracleDataService { CustomizationString = connectionString };
+            return new OracleDataService(new EmptySecurityManager(), new EmptyAuditService(), new EmptyBusinessServerProvider()) { CustomizationString = connectionString };
         }
 
         /// <summary>
@@ -332,7 +355,7 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <returns>The <see cref="ClickHouseDataService"/> instance.</returns>
         protected virtual ClickHouseDataService CreateClickHouseDataService(string connectionString)
         {
-            return new ClickHouseDataService { CustomizationString = connectionString };
+            return new ClickHouseDataService(new EmptySecurityManager(), new EmptyAuditService(), new EmptyBusinessServerProvider()) { CustomizationString = connectionString };
         }
 
         /// <summary>
@@ -418,7 +441,12 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string connectionStringsConfigSectionName = "connectionStrings";
             ConnectionStringsSection connectionStringsSection = (ConnectionStringsSection)configuration.GetSection(connectionStringsConfigSectionName);
-            connectionStringsSection.ConnectionStrings.Remove($"{service.AuditService.AppSetting.AppName}_{service.AuditService.AppSetting.AuditConnectionStringName}");
+            string name = $"{service.AuditService.AppSetting.AppName}_{service.AuditService.AppSetting.AuditConnectionStringName}";
+            if (connectionStringsSection.ConnectionStrings[name] != null)
+            {
+                connectionStringsSection.ConnectionStrings.Remove(name);
+            }
+
             configuration.Save();
             ConfigurationManager.RefreshSection(connectionStringsConfigSectionName);
         }
@@ -489,12 +517,21 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
         /// <param name="dataService">Сервис данных аудита.</param>
         private static void InitAuditService(IDataService dataService)
         {
-            var auditAppSetting = new AuditAppSetting
+            Type dsType = dataService.GetType();
+            string realName = dsType == typeof(MSSQLDataService)
+                ? "ConnectionStringMssql"
+                : dsType == typeof(PostgresDataService)
+                    ? "ConnectionStringPostgres"
+                    : dsType == typeof(ClickHouseDataService)
+                        ? "ConnectionStringClickHouse"
+                        : "ConnectionStringOracle";
+
+            AuditAppSetting auditAppSetting = new AuditAppSetting
             {
                 AppName = "Tests",
                 AuditEnabled = true,
                 IsDatabaseLocal = true,
-                AuditConnectionStringName = dataService.AuditService.AppSetting.AuditConnectionStringName,
+                AuditConnectionStringName = realName,
                 AuditWinServiceUrl = null,
                 WriteSessions = false,
                 DefaultWriteMode = tWriteMode.Synchronous,
@@ -504,7 +541,8 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             auditAppSetting.AuditDSSettings.Add(auditDsSetting);
 
             var legacyAuditManager = new LegacyAuditManager(dataService, new LegacyAuditConverter<JsonFieldAuditData>(), new JsonLegacyAuditSerializer());
-            AuditService.InitAuditService(auditAppSetting, legacyAuditManager, dataService.AuditService);
+            dataService.AuditService.AppSetting = auditAppSetting;
+            dataService.AuditService.Audit = legacyAuditManager;
         }
     }
 }

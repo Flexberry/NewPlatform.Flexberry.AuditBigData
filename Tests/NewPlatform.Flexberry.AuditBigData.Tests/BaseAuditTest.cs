@@ -34,7 +34,7 @@
                 // Act.
                 dataService.UpdateObject(class1);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -91,7 +91,7 @@
 
                 dataService.UpdateObject(class1);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -146,7 +146,7 @@
 
                 dataService.UpdateObject(class1);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -182,10 +182,9 @@
         /// <returns>Returns instance of the <see cref="AuditService" /> class that will be used for the test.</returns>
         protected override AuditService GetAuditServiceForTest()
         {
-            return new AuditService
+            return new AuditService(new TestUser())
             {
                 AppSetting = new AuditAppSetting { AuditEnabled = true },
-                ApplicationMode = AppMode.Win,
                 Audit = new EmptyAudit(),
             };
         }

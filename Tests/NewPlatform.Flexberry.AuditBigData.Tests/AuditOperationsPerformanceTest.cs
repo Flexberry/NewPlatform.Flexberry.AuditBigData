@@ -129,10 +129,9 @@
         /// <returns>Returns instance of the <see cref="AuditService" /> class that will be used for the test.</returns>
         protected override AuditService GetAuditServiceForTest()
         {
-            return new AuditService
+            return new AuditService(new TestUser())
             {
                 AppSetting = new AuditAppSetting { AuditEnabled = true },
-                ApplicationMode = AppMode.Win,
                 Audit = new EmptyAudit(),
             };
         }
