@@ -1,8 +1,8 @@
 ﻿namespace ICSSoft.STORMNET.Business.Audit.Tests
 {
-    using ICSSoft.Services;
+    using NewPlatform.Flexberry.ORM.CurrentUserService;
 
-    public class TestUser : CurrentUserService.IUser
+    public class TestUser : ICurrentUser
     {
         /// <inheritdoc/>
         public string Login { get => "Vasiliev"; set => throw new System.NotImplementedException(); }

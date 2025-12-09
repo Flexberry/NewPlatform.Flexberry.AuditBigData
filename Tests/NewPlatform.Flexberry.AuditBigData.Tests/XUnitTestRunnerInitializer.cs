@@ -2,7 +2,8 @@
 
 namespace NewPlatform.Flexberry.ORM.Tests
 {
-#if NETCOREAPP
+#if NETFRAMEWORK
+#else
     using System.Configuration;
     using System.IO;
     using System.Reflection;
@@ -23,7 +24,8 @@ namespace NewPlatform.Flexberry.ORM.Tests
         public XUnitTestRunnerInitializer(IMessageSink messageSink)
             : base(messageSink)
         {
-#if NETCOREAPP
+#if NETFRAMEWORK
+#else
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             string configFile = $"{Assembly.GetExecutingAssembly().Location}.config";
             string outputConfigFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).FilePath;

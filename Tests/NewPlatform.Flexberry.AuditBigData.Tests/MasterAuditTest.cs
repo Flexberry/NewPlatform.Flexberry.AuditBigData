@@ -43,10 +43,10 @@
                 string class2AuditUpdateText = "Class1(Class1.Field11=Field11, Class1.Field12=Field12)";
 
                 // Act.
-                DataObject[] dataObjects = new DataObject[] { class1, class2};
+                DataObject[] dataObjects = new DataObject[] { class1, class2 };
                 dataService.UpdateObjects(ref dataObjects);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -127,7 +127,7 @@
 
                 dataService.UpdateObject(class2);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -201,7 +201,7 @@
 
                 dataService.UpdateObject(class2);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -269,7 +269,7 @@
                 DataObject[] dataObjects = new DataObject[] { class1, class2 };
                 dataService.UpdateObjects(ref dataObjects);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -319,7 +319,7 @@
                 // Act.
                 dataService.UpdateObject(class2);
 
-                ExternalLangDef langDef = ExternalLangDef.LanguageDef;
+                ExternalLangDef langDef = new ExternalLangDef(dataService);
 
                 // Вычитка записей аудита.
                 LoadingCustomizationStruct lcs = LoadingCustomizationStruct.GetSimpleStruct(typeof(AuditRecord), AuditRecord.Views.AllFields);
@@ -355,10 +355,9 @@
         /// <returns>Returns instance of the <see cref="AuditService" /> class that will be used for the test.</returns>
         protected override AuditService GetAuditServiceForTest()
         {
-            return new AuditService
+            return new AuditService(new TestUser())
             {
                 AppSetting = new AuditAppSetting { AuditEnabled = true },
-                ApplicationMode = AppMode.Win,
                 Audit = new EmptyAudit(),
             };
         }
