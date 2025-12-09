@@ -2,10 +2,10 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Authors>New Platform Ltd.</Authors>
-    <Copyright>Copyright 2017-2021 © New Platform Ltd.</Copyright>
+    <Copyright>Copyright 2017-2025 © New Platform Ltd.</Copyright>
     <Company>New Platform Ltd.</Company>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>rc04</VersionSuffix>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionSuffix>beta01</VersionSuffix>
     <PackageProjectUrl>https://flexberry.net</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
@@ -17,6 +17,8 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
   <PropertyGroup>

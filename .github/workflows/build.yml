@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     # Service containers to run with `runner-job`
     services:
           # Label used to access the service container
@@ -47,22 +47,22 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         
       - name: Install apt-get packages
         run: sudo apt-get install -y doxygen 
 
       - name: NuGet Restore
-        run: nuget restore "NewPlatform.Flexberry.AuditBigData.sln" -NonInteractive
+        run: dotnet restore "NewPlatform.Flexberry.AuditBigData.sln"
         
       - name: Install xunit.runner.console
         run: nuget install xunit.runner.console -Version 2.4.1 -OutputDirectory testrunner
         
       - name: Compile code
-        run:  msbuild /verbosity:quiet /p:WarningLevel=0 /p:Configuration=Debug "NewPlatform.Flexberry.AuditBigData.sln"
+        run:  dotnet build --no-restore -v q /p:WarningLevel=0 -c Debug "NewPlatform.Flexberry.AuditBigData.sln"
 
       - name: Integration test under dotnet
-        run: dotnet test ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/netcoreapp3.1/NewPlatform.Flexberry.AuditBigData.Tests.dll
+        run: dotnet test ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/net10.0/NewPlatform.Flexberry.AuditBigData.Tests.dll
 
       - name: Integration test under mono
         run: mono ./testrunner/xunit.runner.console.2.4.1/tools/net461/xunit.console.exe ./Tests/NewPlatform.Flexberry.AuditBigData.Tests/bin/Debug/net461/NewPlatform.Flexberry.AuditBigData.Tests.dll

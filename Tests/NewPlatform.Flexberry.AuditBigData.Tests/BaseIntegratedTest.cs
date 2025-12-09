@@ -155,8 +155,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     _dataServices.Add(dataService);
 
                     InitAuditService(dataService);
-
-                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connStr));
+                    string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                    if (connectionStringsSection.ConnectionStrings[name] != null)
+                    {
+                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
+                    }
                 }
             }
 
@@ -184,7 +187,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     MSSQLDataService dataService = CreateMssqlDataService(connStr);
                     _dataServices.Add(dataService);
                     InitAuditService(dataService);
-                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connStr));
+                    string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                    if (connectionStringsSection.ConnectionStrings[name] != null)
+                    {
+                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
+                    }
                 }
             }
 
@@ -243,7 +250,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                         OracleDataService dataService = CreateOracleDataService(connStr);
                         _dataServices.Add(dataService);
                         InitAuditService(dataService);
-                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connStr));
+                        string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                        if (connectionStringsSection.ConnectionStrings[name] != null)
+                        {
+                            connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connStr));
+                        }
                     }
                 }
             }
@@ -295,7 +306,11 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
                     InitAuditService(dataService);
 
                     string appName = "_audit" + dataService.AuditService.AppSetting.AppName;
-                    connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings($"{appName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}", connectionString));
+                    string name = $"{dataService.AuditService.AppSetting.AppName}_{dataService.AuditService.AppSetting.AuditConnectionStringName}";
+                    if (connectionStringsSection.ConnectionStrings[name] != null)
+                    {
+                        connectionStringsSection.ConnectionStrings.Add(new ConnectionStringSettings(name, connectionString));
+                    }
                 }
             }
 
@@ -426,7 +441,12 @@ namespace ICSSoft.STORMNET.Business.Audit.Tests
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string connectionStringsConfigSectionName = "connectionStrings";
             ConnectionStringsSection connectionStringsSection = (ConnectionStringsSection)configuration.GetSection(connectionStringsConfigSectionName);
-            connectionStringsSection.ConnectionStrings.Remove($"{service.AuditService.AppSetting.AppName}_{service.AuditService.AppSetting.AuditConnectionStringName}");
+            string name = $"{service.AuditService.AppSetting.AppName}_{service.AuditService.AppSetting.AuditConnectionStringName}";
+            if (connectionStringsSection.ConnectionStrings[name] != null)
+            {
+                connectionStringsSection.ConnectionStrings.Remove(name);
+            }
+
             configuration.Save();
             ConfigurationManager.RefreshSection(connectionStringsConfigSectionName);
         }
